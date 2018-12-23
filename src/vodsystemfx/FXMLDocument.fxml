@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vodsystemfx.FXMLVODSystemController">
+   <right>
+      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="196.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Basic Actions" />
+            <Button fx:id="newDistributorBtn" mnemonicParsing="false" onAction="#handleDistributorClick" prefHeight="31.0" prefWidth="151.0" text="New Distributor" />
+            <Button fx:id="newUserBtn" mnemonicParsing="false" onAction="#handleUserClick" prefHeight="31.0" prefWidth="151.0" text="New User" />
+            <Button fx:id="newProductBtn" mnemonicParsing="false" onAction="#handleProductClick" prefHeight="31.0" prefWidth="150.0" text="New Product" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#handleExitClick" prefHeight="31.0" prefWidth="149.0" text="Exit" />
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Control Panel" BorderPane.alignment="CENTER_LEFT">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>
