@@ -18,8 +18,8 @@ import javafx.stage.Stage;
  */
 public class VODSystemFX extends Application {
 
-    Stage window;
-    Scene scene1, scene2;
+    private Stage window;
+    private Scene scene1, scene2;
 
     /**
      * @param args the command line arguments
@@ -52,7 +52,6 @@ public class VODSystemFX extends Application {
 //        button1.setOnAction(e -> window.setScene(scene2)); przełączanie pomiędzy oknami
         window.setScene(scene);
         window.show(); // stage appears
-
     }
 
     //Jakoś, żeby tego nie powielać muszę z jednego pliku korzystać

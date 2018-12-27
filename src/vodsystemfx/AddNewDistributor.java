@@ -58,11 +58,13 @@ public class AddNewDistributor {
         });
     }
 
-    public static boolean display(String title) throws FileNotFoundException {
+    public static boolean display(String title, Distributor di) throws FileNotFoundException {
         displayStandard(title);
         
         System.out.println("Using distributor method");
         Distributor d = new Distributor();
+        di = d;
+         
         //Name fields
         label0 = new Label("Name:");
         GridPane.setConstraints(label0, 0, 0);
@@ -86,7 +88,10 @@ public class AddNewDistributor {
 
         Scene scene = new Scene(grid, 300, 200); //resolution
         window.setScene(scene);
-        window.showAndWait(); //cannot use any other window?
+        
+        window.showAndWait(); //waiting for?
+        
+//        dist = d;
         return answer;
     }
 

@@ -8,8 +8,13 @@ package vodsystemfx;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import vodsystemfx.classes.Distributor;
 
 /**
  *
@@ -17,17 +22,21 @@ import javafx.scene.control.Button;
  */
 public class FXMLVODSystemController implements Initializable {
 
-    public Button button;
-
-    public void handleButtonClick() {
-        System.out.println("Run some code user doesnt see");
-        button.setText("Stop touching me!");
+    @FXML
+    public ListView<?> distListView;
+    private ObservableList observableList = FXCollections.observableArrayList();
+    
+    public void distListViewAdd(String text) {
+        observableList.addAll(text);
+        distListView.setItems(observableList);
     }
 
     public void handleDistributorClick() throws FileNotFoundException {
         System.out.println("Kliknięto");
-        boolean result = AddNewDistributor.display("New Distributor");
-        System.out.println("Apply changes: " + result);
+        String n = "nic";
+        Distributor di = new Distributor(); //wolałbym uniknąć
+        if (AddNewDistributor.display("New Distributor", di) == true) distListViewAdd(di.getName()); // nie zmienia sie wartosc dist, nie jak w cpp
+//        System.out.println("Apply changes: " + "");
     }
 
     public void handleUserClick() throws FileNotFoundException {
@@ -39,9 +48,6 @@ public class FXMLVODSystemController implements Initializable {
         AddNewProduct2.display("New Product");
     }
 
-//    public void setOnCloseRequest(){
-//        saveProgram();
-//    }
     public void handleExitClick() {
         saveProgram();
     }
@@ -49,6 +55,8 @@ public class FXMLVODSystemController implements Initializable {
     // Executing when closing program
     public void saveProgram() {
         System.out.println("Status saved.");
+//        VODSystemFX.saveProgram(); -- nie mozna wywolac niestatyczna
+//        window.close(); -- nie mozna sie odwolac
     }
 
     @Override
