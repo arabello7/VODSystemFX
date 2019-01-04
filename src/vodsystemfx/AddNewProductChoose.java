@@ -6,6 +6,8 @@
 package vodsystemfx;
 
 import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author tomas
  */
-public class AddNewProduct2 {
+public class AddNewProductChoose {
     
     public void handleMovieClick() {
 //        boolean bool = AddNewMovie.display("New Movie");
@@ -60,6 +62,14 @@ public class AddNewProduct2 {
         seriesBtn.setOnAction(e -> {
             try {
                 AddNewProduct.display("New Series");
+            } catch (FileNotFoundException ex) {
+                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+            }
+        });
+        
+        movieBtn.setOnAction(e -> {
+            try {
+                AddNewProduct.display("New Movie"); //*char m jako argument i potem fukncja dokladajaca pola od filmu
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
             }

@@ -58,12 +58,10 @@ public class AddNewDistributor {
         });
     }
 
-    public static boolean display(String title, Distributor di) throws FileNotFoundException {
+    public static boolean display(String title, Distributor d) throws FileNotFoundException {
         displayStandard(title);
         
         System.out.println("Using distributor method");
-        Distributor d = new Distributor();
-        di = d;
          
         //Name fields
         label0 = new Label("Name:");

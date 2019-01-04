@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import static vodsystemfx.AddNewDistributor.displayStandard;
 import static vodsystemfx.AddNewDistributor.window;
+import vodsystemfx.classes.User;
 
 /**
  *
@@ -25,35 +26,35 @@ public class AddNewUser extends AddNewDistributor {
     private static TextField input2;
     private static TextField input3;
 
-    public static boolean display(String title) throws FileNotFoundException {
+    public static boolean display(String title, User u) throws FileNotFoundException {
         displayStandard(title);
         System.out.println("Using User method");
 
         //UserName fields
         label0 = new Label("Name:");
         GridPane.setConstraints(label0, 0, 0);
-        input0 = new TextField("#random");
+        input0 = new TextField(u.getCode());
         input0.setEditable(false);
         GridPane.setConstraints(input0, 1, 0);
 
         //Birthdate fields
         label1 = new Label("Birthdate:");
         GridPane.setConstraints(label1, 0, 1);
-        input1 = new TextField("#random");
+        input1 = new TextField(u.getBirthDate());
         input1.setEditable(false);
         GridPane.setConstraints(input1, 1, 1);
 
         //Mail fields
         label2 = new Label("Mail:");
         GridPane.setConstraints(label2, 0, 2);
-        input2 = new TextField("#random");
+        input2 = new TextField(u.getEmail());
         input2.setEditable(false);
         GridPane.setConstraints(input2, 1, 2);
 
         //CreditCard fields
         label3 = new Label("Credit Card:");
         GridPane.setConstraints(label3, 0, 3);
-        input3 = new TextField("#random");
+        input3 = new TextField(u.getCreditCard());
         input3.setEditable(false);
         GridPane.setConstraints(input3, 1, 3);
 

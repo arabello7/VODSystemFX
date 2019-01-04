@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.User;
 
 /**
  *
@@ -24,28 +25,41 @@ public class FXMLVODSystemController implements Initializable {
 
     @FXML
     public ListView<?> distListView;
-    private ObservableList observableList = FXCollections.observableArrayList();
+    public ListView<?> userListView;
+    private final ObservableList distObservableList = FXCollections.observableArrayList();
+    private final ObservableList userObservableList = FXCollections.observableArrayList();
     
     public void distListViewAdd(String text) {
-        observableList.addAll(text);
-        distListView.setItems(observableList);
+        distObservableList.addAll(text);
+        distListView.setItems(distObservableList);
+    }
+    
+    public void userListViewAdd(String text) {
+        userObservableList.addAll(text);
+        userListView.setItems(userObservableList);
     }
 
     public void handleDistributorClick() throws FileNotFoundException {
-        System.out.println("Kliknięto");
-        String n = "nic";
-        Distributor di = new Distributor(); //wolałbym uniknąć
-        if (AddNewDistributor.display("New Distributor", di) == true) distListViewAdd(di.getName()); // nie zmienia sie wartosc dist, nie jak w cpp
+        Distributor d = new Distributor(); 
+        if (AddNewDistributor.display("New Distributor", d) == true) {
+            System.out.println("Changes accepted.");
+            distListViewAdd(d.getName()); //dodawanie do listView
+            //dodawanie do ArrayList
+        } 
 //        System.out.println("Apply changes: " + "");
     }
 
     public void handleUserClick() throws FileNotFoundException {
-        boolean result = AddNewUser.display("New User");
-        System.out.println("Apply changes: " + result);
+        User u = new User();
+        if (AddNewUser.display("New User", u) == true) {
+            System.out.println("Changes accepted.");
+            userListViewAdd(u.getCode()); //dodawanie do listView
+            //dodawanie do ArrayList
+        }
     }
 
     public void handleProductClick() throws FileNotFoundException {
-        AddNewProduct2.display("New Product");
+        AddNewProductChoose.display("New Product");
     }
 
     public void handleExitClick() {
