@@ -34,12 +34,13 @@ public class Movie extends Product /*implements Promotion*/ { //interfejs
     }
 
 
-    public Movie(Distributor dist, String url, int period) {
-//        UserInterface.getProductInfo(photo, name, price, name, productionDate, duration, prodCountries, duration);
+    public Movie(Distributor dist) {
+        super();
         this.distributor = dist;
-        this.trailerUrl = url;
-        this.viewingPeriod = period;
+        this.trailerUrl = "www.youtube.com/?" + getName();
+        this.viewingPeriod = 69;
     }
+    
 /*
     @Override
     public void setStartDate(int date) {

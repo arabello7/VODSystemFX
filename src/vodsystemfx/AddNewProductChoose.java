@@ -75,6 +75,14 @@ public class AddNewProductChoose {
             }
         });
         
+        streamBtn.setOnAction(e -> {
+            try {
+                AddNewProduct.display("New Stream");
+            } catch (FileNotFoundException ex) {
+                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+            }
+        });
+        
         backBtn.setOnAction(e -> window.close());
 
         grid.setAlignment(Pos.CENTER);

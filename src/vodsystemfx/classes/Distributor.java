@@ -48,6 +48,10 @@ public class Distributor {
     public String getName() {
         return name;
     }
+    
+    public void setName (String name){
+        this.name = name;
+    }
 
     public double getFinance() {
         return finance;
@@ -63,7 +67,7 @@ public class Distributor {
     public void addMovie() {
         String trailerUrl = "...";
         int viewingPeriod = 0;
-        Product p = new Movie(this, trailerUrl, viewingPeriod);
+        Product p = new Movie(this);
         productList.add(p);
     }
 
