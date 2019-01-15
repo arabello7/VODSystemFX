@@ -53,18 +53,18 @@ public class FilmSerialStream {
         TextField distributorTextField = new TextField();
         TextField countriesTextField = new TextField();
 
-        topGrid.setConstraints(text0, 0, 0);
-        topGrid.setConstraints(text1, 0, 1);
-        topGrid.setConstraints(text2, 0, 2);
-        topGrid.setConstraints(text3, 0, 3);
-        topGrid.setConstraints(text4, 0, 4);
-        topGrid.setConstraints(text5, 0, 5);
-        topGrid.setConstraints(nameTextField, 1, 0);
-        topGrid.setConstraints(priceTextField, 1, 1);
-        topGrid.setConstraints(dateTextField, 1, 2);
-        topGrid.setConstraints(durationTextField, 1, 3);
-        topGrid.setConstraints(distributorTextField, 1, 4);
-        topGrid.setConstraints(countriesTextField, 1, 5);
+        GridPane.setConstraints(text0, 0, 0);
+        GridPane.setConstraints(text1, 0, 1);
+        GridPane.setConstraints(text2, 0, 2);
+        GridPane.setConstraints(text3, 0, 3);
+        GridPane.setConstraints(text4, 0, 4);
+        GridPane.setConstraints(text5, 0, 5);
+        GridPane.setConstraints(nameTextField, 1, 0);
+        GridPane.setConstraints(priceTextField, 1, 1);
+        GridPane.setConstraints(dateTextField, 1, 2);
+        GridPane.setConstraints(durationTextField, 1, 3);
+        GridPane.setConstraints(distributorTextField, 1, 4);
+        GridPane.setConstraints(countriesTextField, 1, 5);
 
         topGrid.setVgap(8);
         topGrid.setHgap(10);
@@ -80,10 +80,10 @@ public class FilmSerialStream {
         Button backButton = new Button("Back");
         Button confirmButton = new Button("Confirm");
         
-        bottomGrid.setConstraints(descriptionTextField, 0, 0);
+        GridPane.setConstraints(descriptionTextField, 0, 0);
 //        bottomGrid.setConstraints(picture, 0, 1);
-        bottomGrid.setConstraints(backButton, 0, 1);
-        bottomGrid.setConstraints(confirmButton, 1, 1);
+        GridPane.setConstraints(backButton, 0, 1);
+        GridPane.setConstraints(confirmButton, 1, 1);
         
         bottomGrid.setVgap(8);
         bottomGrid.setHgap(10);

@@ -64,11 +64,8 @@ public class Distributor {
     public void makeAgreement() {
     }
 
-    public void addMovie() {
-        String trailerUrl = "...";
-        int viewingPeriod = 0;
-        Product p = new Movie(this);
-        productList.add(p);
+    public void addMovie(Movie m) {
+        productList.add(m);
     }
 
     /*

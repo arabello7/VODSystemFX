@@ -16,18 +16,30 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.Movie;
 
 /**
  *
  * @author tomas
  */
 public class AddNewProductChoose {
-    
+
+    public static boolean apply = false;
+
+    public static boolean isApply() {
+        return apply;
+    }
+
+    public static void setApply(boolean apply) {
+        AddNewProductChoose.apply = apply;
+    }
+
     public void handleMovieClick() {
 //        boolean bool = AddNewMovie.display("New Movie");
     }
-    
-    public static void display(String title) {
+
+    public static void display(String title) throws FileNotFoundException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setMinWidth(400);
@@ -51,38 +63,45 @@ public class AddNewProductChoose {
         seriesBtn.setMinWidth(grid.getPrefWidth());
         streamBtn.setMinWidth(grid.getPrefWidth());
         backBtn.setMinWidth(grid.getPrefWidth());
-        
+
         GridPane.setConstraints(text, 0, 0);
         GridPane.setConstraints(movieBtn, 0, 1);
         GridPane.setConstraints(seriesBtn, 0, 2);
         GridPane.setConstraints(streamBtn, 0, 3);
         GridPane.setConstraints(freeSpace, 0, 4);
         GridPane.setConstraints(backBtn, 0, 5);
-        
+
         seriesBtn.setOnAction(e -> {
-            try {
-                AddNewProduct.display("New Series");
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
-            }
+//            try {
+//                
+//                AddNewProduct.display("New Series");
+//            } catch (FileNotFoundException ex) {
+//                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+//            }
         });
-        
+
         movieBtn.setOnAction(e -> {
-            try {
-                AddNewProduct.display("New Movie"); //*char m jako argument i potem fukncja dokladajaca pola od filmu
+            try {//*char m jako argument i potem fukncja dokladajaca pola od filmu
+                Distributor d = new Distributor(); //potem z listy!! - losuj nr i get one
+                Movie m = new Movie(d);
+                if (AddNewProduct.display("New Movie", d, m) == true) {
+                    d.addMovie(m);
+                    VODSystemFX.addToAllProducts(m);
+                }
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
             }
         });
-        
+
         streamBtn.setOnAction(e -> {
             try {
-                AddNewProduct.display("New Stream");
+                Distributor d = new Distributor();
+//                AddNewProduct.display("New Stream", d); jesli dodawanie do listy po kliknieciu apply
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
             }
         });
-        
+
         backBtn.setOnAction(e -> window.close());
 
         grid.setAlignment(Pos.CENTER);

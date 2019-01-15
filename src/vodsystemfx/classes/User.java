@@ -4,12 +4,6 @@
  * and open the template in the editor.
  */
 package vodsystemfx.classes;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Random;
 

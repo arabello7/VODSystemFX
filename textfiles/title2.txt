@@ -1,0 +1,17 @@
+Elf
+Brian
+King
+Queen
+Human
+Ship
+Dragon
+Knight
+Detective
+Star
+Queen
+Boy
+Girl
+Scientist
+Kingdom
+Agent
+Giant

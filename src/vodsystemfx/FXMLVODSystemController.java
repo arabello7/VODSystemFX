@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.Product;
 import vodsystemfx.classes.User;
 
 /**
@@ -26,11 +27,16 @@ public class FXMLVODSystemController implements Initializable {
     @FXML
     public ListView<?> distListView;
     public ListView<?> userListView;
+    public ListView<?> productListView;
     private final ObservableList distObservableList = FXCollections.observableArrayList();
     private final ObservableList userObservableList = FXCollections.observableArrayList();
+    private final ObservableList productObservableList = FXCollections.observableArrayList();
     
-    public void distListViewAdd(String text) {
-        distObservableList.addAll(text);
+    public void distListViewAdd() {
+        distListView.getItems().clear();
+        for (Distributor d : VODSystemFX.getAllDistributors()) {
+            distObservableList.addAll(d.getName());
+        }
         distListView.setItems(distObservableList);
     }
     
@@ -38,15 +44,20 @@ public class FXMLVODSystemController implements Initializable {
         userObservableList.addAll(text);
         userListView.setItems(userObservableList);
     }
+    
+    public void productListViewAdd(Product p) {
+        productObservableList.addAll(p);
+        productListView.setItems(productObservableList);
+    }
 
     public void handleDistributorClick() throws FileNotFoundException {
         Distributor d = new Distributor(); 
         if (AddNewDistributor.display("New Distributor", d) == true) {
             System.out.println("Changes accepted.");
-            distListViewAdd(d.getName()); //dodawanie do listView
-            //dodawanie do ArrayList
-        } 
-//        System.out.println("Apply changes: " + "");
+//            distListViewAdd(d.getName()); //dodawanie do listView
+            VODSystemFX.addToAllDistributors(d); // lista globalna
+            distListViewAdd(); //dodawanie do ListView
+        }
     }
 
     public void handleUserClick() throws FileNotFoundException {
@@ -60,6 +71,7 @@ public class FXMLVODSystemController implements Initializable {
 
     public void handleProductClick() throws FileNotFoundException {
         AddNewProductChoose.display("New Product");
+//            productListViewAdd(wszystkie produkty)
     }
 
     public void handleExitClick() {

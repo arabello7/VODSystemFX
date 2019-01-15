@@ -6,11 +6,16 @@
 package vodsystemfx;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.Product;
+import vodsystemfx.classes.User;
 
 /**
  *
@@ -20,6 +25,32 @@ public class VODSystemFX extends Application {
 
     private Stage window;
     private Scene scene1, scene2;
+    //public int DistributorsTotal = X zapewne
+    private static List<Distributor> allDistributors = new ArrayList<>();
+    private final List<User> allUsers = new ArrayList<>();
+    private static List<Product> allProducts = new ArrayList<>();
+
+    public static List<Product> getAllProducts() {
+        return allProducts;
+    }
+
+    public static void addToAllProducts(Product p) {
+        allProducts.add(p);
+    }
+
+    public static void addToAllDistributors(Distributor d) {
+        allDistributors.add(d);
+    }
+
+    public static List<Distributor> getAllDistributors() {
+        return allDistributors;
+    }
+
+    public void setAllUsers(User u) {
+        this.allUsers.add(u);
+    }
+    
+    
 
     /**
      * @param args the command line arguments
@@ -27,8 +58,8 @@ public class VODSystemFX extends Application {
     public static void main(String[] args) throws FileNotFoundException {
 
         launch(args); //launching application start method
-
-//        List<Distributor> distributors = new ArrayList<>();
+        
+        
 //        Distributor d1 = new Distributor();
 //        System.out.println(d1.getName() + " " + d1.getFinance());
     }

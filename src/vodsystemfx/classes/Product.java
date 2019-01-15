@@ -18,24 +18,25 @@ import java.util.Random;
 public class Product {
 
     protected String photo; //what type?
-    protected String name;
+    protected String title;
     protected double price;
     protected String description; // Moze lorem ipsum
-    protected int productionDate; //type?
+    protected String productionDate;
     protected int duration;
     protected Distributor distributor; //Losuj z dostepnych
-    protected String[] prodCountries = new String[3]; //dobrze?
+    protected String[] prodCountries = new String[2]; //ma to sens?
+    protected String[] actors;
     protected double usersRating; //Na poczatku zero, potem sie zmienia, ludzie losowo glosuja
-    
-    protected final int COUNTRIESSIZE = 199; // Countires in text file
+    protected final int COUNTRIESSIZE = 199; // Countries in text file
+    protected final int TITLESIZE = 16;
     //actors ?
 
-    public String readFile(int line) {
+    public String readFile(int line, String file) {
         BufferedReader reader;
         String text = "";
         try {
-            reader = new BufferedReader(new FileReader("textfiles/countires.txt"));
-            while (line > 0){
+            reader = new BufferedReader(new FileReader("textfiles/" + file));
+            while (line > 0) {
                 reader.readLine();
                 line--;
             }
@@ -48,32 +49,42 @@ public class Product {
         }
         return text;
     }
-    
-    public void randomizeProduct() {
-            System.out.println("Random product:");
-        photo = "?";
-        //name - randomowe 3 slowa
-        Random rand = new Random();
-        price = rand.nextDouble() * 20;
-            System.out.println("price: " + price);
-        description = "lorem ipsum..."; // albo uniwersalna historia na podstawie wylosowanych pol
-        //dystrybutor wybór z listy dostępnych
-        
-        //prod countires losowanie 3 z pliku
-        int line1 = rand.nextInt(199);
-        int line2 = rand.nextInt(199);
-        int line3 = rand.nextInt(199);
-        
-        prodCountries[0] = readFile(line1);
-        prodCountries[1] = readFile(line2);
-        prodCountries[2] = readFile(line3);
 
-        usersRating = 0.0;
+    public void randomizeProduct() {
+        photo = "<not available";
+        Random rand = new Random();
+
+        //Generating product title
+        int line = rand.nextInt(TITLESIZE);
+        title = readFile(line, "title1.txt") + " ";
+        line = rand.nextInt(TITLESIZE);
+        title += readFile(line, "title2.txt") + " ";
+        line = rand.nextInt(TITLESIZE);
+        title += readFile(line, "title3.txt");
+
+        price = Math.round(rand.nextDouble() * 20 * 100.0) / 100.0;
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper malesuada semper. Donec vestibulum ipsum non est aliquam dictum. Quisque."; // albo uniwersalna historia na podstawie wylosowanych pol
+
+        //Generating countries
+        line = rand.nextInt(COUNTRIESSIZE);
+        prodCountries[0] = readFile(line, "countries.txt");
+        line = rand.nextInt(COUNTRIESSIZE);
+        prodCountries[1] = readFile(line, "countries.txt");
+
+        int num = rand.nextInt(27) + 1;
+        productionDate = Integer.toString(num) + ".";
+        num = rand.nextInt(11) + 1;
+        productionDate += Integer.toString(num) + ".";
+        num = rand.nextInt(119) + 1900;
+        productionDate += Integer.toString(num);
+        num = rand.nextInt(200) + 40;
+        duration = num;
     }
 
-    public Product() {
-//        UserInterface.getProductInfo(photo, name, price, ..., productionDate, duration, prodCountries, ...);
-        //this.distributor = dist; -- po dodaniu dist jako argumentu metody nie działało, i tak trzeba bylo w dziedziczących
+    public Product(Distributor d) {
+        this.distributor = d;
+        usersRating = 0.0;
+        randomizeProduct();
     }
 
     public String getPhoto() {
@@ -84,16 +95,24 @@ public class Product {
         this.photo = photo;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String title) {
+        this.title = title;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public String getProductionDate() {
+        return productionDate;
+    }
+
+    public String[] getActors() {
+        return actors;
     }
 
     public void setPrice(double price) {
@@ -106,14 +125,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getProductionDate() {
-        return productionDate;
-    }
-
-    public void setProductionDate(int productionDate) {
-        this.productionDate = productionDate;
     }
 
     public int getDuration() {

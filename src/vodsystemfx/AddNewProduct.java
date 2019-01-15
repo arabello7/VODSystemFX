@@ -62,17 +62,13 @@ public class AddNewProduct extends AddNewDistributor {
         input7.setVisible(false);
     }
 
-    public static boolean display(String title) throws FileNotFoundException {
+    public static boolean display(String title, Distributor d, Movie p) throws FileNotFoundException { //potem M na T<>
         displayStandard(title);
-
-        Distributor d = new Distributor();
-        d.setName("Spinka Studio");
-        Movie p = new Movie(d);
         
         //Name fields
         label0 = new Label("Name:");
         GridPane.setConstraints(label0, 0, 0);
-        input0 = new TextField("#random");
+        input0 = new TextField(p.getTitle());
         input0.setEditable(false);
         GridPane.setConstraints(input0, 1, 0);
 
@@ -86,7 +82,7 @@ public class AddNewProduct extends AddNewDistributor {
         //ProductionDate fields
         label2 = new Label("Production Date:");
         GridPane.setConstraints(label2, 0, 2);
-        input2 = new TextField(String.valueOf(p.getProductionDate())); //jaki format
+        input2 = new TextField(p.getProductionDate());
         input2.setEditable(false);
         GridPane.setConstraints(input2, 1, 2);
 

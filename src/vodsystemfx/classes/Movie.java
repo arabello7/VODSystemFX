@@ -5,6 +5,8 @@
  */
 package vodsystemfx.classes;
 
+import java.security.SecureRandom;
+
 /**
  *
  * @author tomas
@@ -13,8 +15,15 @@ public class Movie extends Product /*implements Promotion*/ { //interfejs
 
     private String trailerUrl;
     private int viewingPeriod; //how long you can view after buying
-    private enum genre {
+    private String genre;
+    private enum Genre {
         action, dramma, comedy, forKids, documentary, sensational
+    }
+    private static final SecureRandom random = new SecureRandom();
+    
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+        int x = random.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
     }
 
     public String getTrailerUrl() {
@@ -33,12 +42,11 @@ public class Movie extends Product /*implements Promotion*/ { //interfejs
         this.viewingPeriod = viewingPeriod;
     }
 
-
     public Movie(Distributor dist) {
-        super();
-        this.distributor = dist;
-        this.trailerUrl = "www.youtube.com/?" + getName();
-        this.viewingPeriod = 69;
+        super(dist);
+        this.trailerUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+//        randomEnum(Genre.class); //nie wiem co z tym
+        this.viewingPeriod = 0; //random
     }
     
 /*
