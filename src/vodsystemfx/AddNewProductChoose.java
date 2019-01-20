@@ -6,8 +6,6 @@
 package vodsystemfx;
 
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Movie;
+import vodsystemfx.classes.Stream;
 
 /**
  *
@@ -81,13 +80,16 @@ public class AddNewProductChoose {
         });
 
         movieBtn.setOnAction(e -> {
-            try {//*char m jako argument i potem fukncja dokladajaca pola od filmu
-                Distributor d = new Distributor(); //potem z listy!! - losuj nr i get one
-                Movie m = new Movie(d);
-                if (AddNewProduct.display("New Movie", d, m) == true) {
+            try {
+                Distributor d = VODSystemFX.getOneDistributor(0); //losowy
+                Movie m = new Movie(d); //warunek, ze jest Dystrybutor!
+                if (AddNewMovie.display("New Movie", m) == true) {
                     d.addMovie(m);
+//                    VODSystemFX.addToAllMovies(m);
                     VODSystemFX.addToAllProducts(m);
+                    System.out.println("Movie accepted.");
                 }
+
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
             }
@@ -95,8 +97,12 @@ public class AddNewProductChoose {
 
         streamBtn.setOnAction(e -> {
             try {
-                Distributor d = new Distributor();
-//                AddNewProduct.display("New Stream", d); jesli dodawanie do listy po kliknieciu apply
+                Distributor d = VODSystemFX.getOneDistributor(0);
+                Stream st = new Stream(d);
+                if (AddNewStream.display("New Stream", st)) {
+                    VODSystemFX.addToAllProducts(st);
+                }
+//                d.addProduct(st);
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
             }

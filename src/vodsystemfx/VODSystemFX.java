@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.Movie;
 import vodsystemfx.classes.Product;
 import vodsystemfx.classes.User;
 
@@ -27,8 +28,17 @@ public class VODSystemFX extends Application {
     private Scene scene1, scene2;
     //public int DistributorsTotal = X zapewne
     private static List<Distributor> allDistributors = new ArrayList<>();
-    private final List<User> allUsers = new ArrayList<>();
+    private static List<User> allUsers = new ArrayList<>();
     private static List<Product> allProducts = new ArrayList<>();
+    private static List<Movie> allMovies = new ArrayList<>();
+
+    public static List<Movie> getAllMovies() {
+        return allMovies;
+    }
+
+    public static void addToAllMovies(Movie m) {
+        allMovies.add(m);
+    }
 
     public static List<Product> getAllProducts() {
         return allProducts;
@@ -45,21 +55,36 @@ public class VODSystemFX extends Application {
     public static List<Distributor> getAllDistributors() {
         return allDistributors;
     }
-
-    public void setAllUsers(User u) {
-        this.allUsers.add(u);
+    
+    public static Distributor getOneDistributor(int i) {
+        return allDistributors.get(i);
     }
-    
-    
+
+    public static List<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public static void addToAllUsers(User u) {
+        allUsers.add(u);
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {//throws FileNotFoundException {
 
         launch(args); //launching application start method
         
-        
+//        int i = 15;
+//        while (i > 0) {
+//            Distributor d = new Distributor();
+//            addToAllDistributors(d);
+//            FXMLVODSystemController.distListViewUpdate();
+//            Product p = new Movie(d);
+//            addToAllProducts(p);
+//            FXMLVODSystemController.productListViewUpdate();
+//            i--;
+//        }
 //        Distributor d1 = new Distributor();
 //        System.out.println(d1.getName() + " " + d1.getFinance());
     }

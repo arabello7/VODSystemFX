@@ -20,7 +20,7 @@ public class User {
     private List<Product> productList;
 
     public final void randomizeUser () {
-        code = Long.toHexString(Double.doubleToLongBits(Math.random()));
+        code = Long.toHexString(Double.doubleToLongBits(Math.random()) / 1000 );
         Random rand = new Random();
         birthDate = String.valueOf(rand.nextInt(29)) + "." + String.valueOf(rand.nextInt(12))+ "." + String.valueOf(rand.nextInt(105) + 1900);
         mail = code.substring(0, 8) + "@" + "mail.com";

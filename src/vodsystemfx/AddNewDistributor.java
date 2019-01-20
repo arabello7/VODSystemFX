@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
+import vodsystemfx.classes.Product;
 
 /**
  *
@@ -32,6 +33,54 @@ public class AddNewDistributor {
     protected static TextField input1;
     protected static Button cancelButton;
     protected static Button applyButton;
+    //pododawane wszystkie labele z AddnewProduct
+    
+    protected static <T extends Product> void drawProductWindow (T p){
+        //Name fields
+        label0 = new Label("Name:");
+        GridPane.setConstraints(label0, 0, 0);
+        input0 = new TextField(p.getTitle());
+        input0.setEditable(false);
+        GridPane.setConstraints(input0, 1, 0);
+
+        //Price fields
+        label1 = new Label("Price:");
+        GridPane.setConstraints(label1, 0, 1);
+        input1 = new TextField(String.valueOf(p.getPrice()));
+        input1.setEditable(false);
+        GridPane.setConstraints(input1, 1, 1);
+
+        //ProductionDate fields
+        Label label2 = new Label("Production Date:");
+        GridPane.setConstraints(label2, 0, 2);
+        TextField input2 = new TextField(p.getProductionDate());
+        input2.setEditable(false);
+        GridPane.setConstraints(input2, 1, 2);
+
+        //Duration fields
+        Label label3 = new Label("Duration:");
+        GridPane.setConstraints(label3, 0, 3);
+        TextField input3 = new TextField(String.valueOf(p.getDuration()));
+        input3.setEditable(false);
+        GridPane.setConstraints(input3, 1, 3);
+
+        //Distributor fields
+        Label label4 = new Label("Distributor:");
+        GridPane.setConstraints(label4, 0, 4);
+        TextField input4 = new TextField(p.getDistributor().getName());
+        input4.setEditable(false);
+        GridPane.setConstraints(input4, 1, 4);
+
+        //Countries fields
+        Label label5 = new Label("Production Countries:");
+        GridPane.setConstraints(label5, 0, 5);
+        TextField input5 = new TextField(String.valueOf(p.getProdCountries()[0] + ", " + p.getProdCountries()[1]));
+        input5.setEditable(false);
+        GridPane.setConstraints(input5, 1, 5);
+
+        grid.getChildren().addAll(label0, input0, label1, input1, label2, input2, label3, input3, input4, label4, label5, input5);
+        grid.setAlignment(Pos.CENTER);
+    }
     
     protected static void displayStandard(String title) {
         window = new Stage();
