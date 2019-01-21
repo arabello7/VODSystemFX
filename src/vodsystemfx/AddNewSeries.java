@@ -28,8 +28,8 @@ public class AddNewSeries extends AddNewDistributor {
     private static TextField input6;
     private static TextField input7;
 
-     public static boolean display(String title, Series s) throws FileNotFoundException { //potem M na T<>
-        displayStandard(title); //-wziete z ADDNew Disst czy warto?     
+     public static boolean display(String title, Series s, boolean ifEdit) throws FileNotFoundException { //potem M na T<>
+        displayStandard(title, ifEdit); //-wziete z ADDNew Disst czy warto?     
         Product p = s;
         drawProductWindow(p);
         

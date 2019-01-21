@@ -11,18 +11,16 @@ package vodsystemfx.classes;
  */
 public class Episode {
 
-    private int releaseDate;
+    private int number; //albo title 
+    private int duration;
+//    private int releaseDate;
 
-    public Episode(Distributor dist, int release) {
-//        this.distributor = dist;
-        this.releaseDate = release;
+    public void randomizeReleaseDate(){
+//        
     }
-
-    public void setReleaseDate(int releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public int getReleaseDate() {
-        return releaseDate;
+    
+    public Episode(int number, int duration) { //rel Date jedna dla sezonu, w zasadzie do klasy sezon dodac
+        this.number = number;
+        this.duration = duration;
     }
 }

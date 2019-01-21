@@ -26,8 +26,8 @@ public class AddNewUser extends AddNewDistributor {
     private static TextField input2;
     private static TextField input3;
 
-    public static boolean display(String title, User u) throws FileNotFoundException {
-        displayStandard(title);
+    public static boolean display(String title, User u, boolean ifEdit) throws FileNotFoundException {
+        displayStandard(title, ifEdit);
         System.out.println("Using User method");
 
         //UserName fields

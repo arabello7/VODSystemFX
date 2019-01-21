@@ -83,7 +83,7 @@ public class AddNewProductChoose {
             try {
                 Distributor d = VODSystemFX.getOneDistributor(0); //losowy
                 Movie m = new Movie(d); //warunek, ze jest Dystrybutor!
-                if (AddNewMovie.display("New Movie", m) == true) {
+                if (AddNewMovie.display("New Movie", m, false) == true) {
                     d.addMovie(m);
 //                    VODSystemFX.addToAllMovies(m);
                     VODSystemFX.addToAllProducts(m);
@@ -99,7 +99,7 @@ public class AddNewProductChoose {
             try {
                 Distributor d = VODSystemFX.getOneDistributor(0);
                 Stream st = new Stream(d);
-                if (AddNewStream.display("New Stream", st)) {
+                if (AddNewStream.display("New Stream", st, false)) {
                     VODSystemFX.addToAllProducts(st);
                 }
 //                d.addProduct(st);

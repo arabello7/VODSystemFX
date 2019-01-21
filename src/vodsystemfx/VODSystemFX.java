@@ -24,7 +24,7 @@ import vodsystemfx.classes.User;
  */
 public class VODSystemFX extends Application {
 
-    private Stage window;
+    private static Stage window;
     private Scene scene1, scene2;
     //public int DistributorsTotal = X zapewne
     private static List<Distributor> allDistributors = new ArrayList<>();
@@ -51,6 +51,10 @@ public class VODSystemFX extends Application {
     public static void addToAllDistributors(Distributor d) {
         allDistributors.add(d);
     }
+    
+    public static void removeDistributor (int index) {
+        allDistributors.remove(index);
+    }
 
     public static List<Distributor> getAllDistributors() {
         return allDistributors;
@@ -67,26 +71,18 @@ public class VODSystemFX extends Application {
     public static void addToAllUsers(User u) {
         allUsers.add(u);
     }
+    
+    public static void removeUser (int index) {
+        allUsers.remove(index);
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {//throws FileNotFoundException {
-
+        System.out.println("Main VOD przed start");
         launch(args); //launching application start method
-        
-//        int i = 15;
-//        while (i > 0) {
-//            Distributor d = new Distributor();
-//            addToAllDistributors(d);
-//            FXMLVODSystemController.distListViewUpdate();
-//            Product p = new Movie(d);
-//            addToAllProducts(p);
-//            FXMLVODSystemController.productListViewUpdate();
-//            i--;
-//        }
-//        Distributor d1 = new Distributor();
-//        System.out.println(d1.getName() + " " + d1.getFinance());
+
     }
 
     //Uruchomienie okna aplikacji
@@ -107,13 +103,13 @@ public class VODSystemFX extends Application {
 //        Button button = new Button("Go to 2nd scene");
 //        button1.setOnAction(e -> window.setScene(scene2)); przełączanie pomiędzy oknami
         window.setScene(scene);
-        window.show(); // stage appears
+        window.show();
     }
 
     //Jakoś, żeby tego nie powielać muszę z jednego pliku korzystać
-    public void saveProgram() {
+    public static void saveProgram() {
         System.out.println("Saving program state...");
-        // here I can put "are you sure?" method
+        // here I can put "are you sure?" alert method
         window.close();
     }
 }

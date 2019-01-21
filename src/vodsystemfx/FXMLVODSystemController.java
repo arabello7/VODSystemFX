@@ -6,6 +6,7 @@
 package vodsystemfx;
 
 import java.io.FileNotFoundException;
+import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javafx.scene.control.ListView;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Movie;
 import vodsystemfx.classes.Product;
+import vodsystemfx.classes.Series;
 import vodsystemfx.classes.User;
 
 /**
@@ -27,23 +29,25 @@ import vodsystemfx.classes.User;
 public class FXMLVODSystemController implements Initializable {
 
     @FXML
-    public static ListView<?> distListView;
+    public ListView<?> distListView;
     public ListView<?> userListView;
     public ListView<?> movieListView;
-    public static ListView<?> productsListView;
+    public ListView<?> productsListView;
     private static ObservableList distObservableList = FXCollections.observableArrayList();
     private final ObservableList userObservableList = FXCollections.observableArrayList();
-    private final ObservableList movieObservableList = FXCollections.observableArrayList(); 
-    private static ObservableList productsObservableList = FXCollections.observableArrayList(); 
-    
-    public static void distListViewUpdate() {
+    private final ObservableList movieObservableList = FXCollections.observableArrayList();
+    private static ObservableList productsObservableList = FXCollections.observableArrayList();
+
+    public void distListViewUpdate() {
         distListView.getItems().clear();
-        for (Distributor d : VODSystemFX.getAllDistributors()) {
-            distObservableList.addAll(d.getName());
+        if (!VODSystemFX.getAllDistributors().isEmpty()) {
+            for (Distributor d : VODSystemFX.getAllDistributors()) {
+                distObservableList.addAll(d.getName());
+            }
         }
         distListView.setItems(distObservableList);
     }
-    
+
     public void userListViewUpdate() {
         userListView.getItems().clear();
         for (User u : VODSystemFX.getAllUsers()) {
@@ -51,8 +55,8 @@ public class FXMLVODSystemController implements Initializable {
         }
         userListView.setItems(userObservableList);
     }
-    
-    public static void productListViewUpdate() throws FileNotFoundException {
+
+    public void productListViewUpdate() throws FileNotFoundException {
         productsListView.getItems().clear();
         for (Product p : VODSystemFX.getAllProducts()) {
             productsObservableList.addAll(p.getTitle());
@@ -61,21 +65,46 @@ public class FXMLVODSystemController implements Initializable {
         System.out.println("Product list updated.");
     }
 
+    // New Distributor Button
     public void handleDistributorClick() throws FileNotFoundException {
-        Distributor d = new Distributor(); 
-        if (AddNewDistributor.display("New Distributor", d) == true) {
-            System.out.println("New distributor was added.");
+        Distributor d = new Distributor();
+        if (AddNewDistributor.display("New Distributor", d, false)) {
             VODSystemFX.addToAllDistributors(d); // Dodawanie do globalnej listy
+            System.out.println("Distributor added.");
             distListViewUpdate(); // Update listView
+        }
+    }
+
+    // Distributor List Click
+    public void handleDistributorListClick() {
+        int selectedIndex = distListView.getSelectionModel().getSelectedIndex();
+        try {
+            if (AddNewDistributor.display("Distributor info", VODSystemFX.getAllDistributors().get(selectedIndex), true)) {
+                VODSystemFX.removeDistributor(selectedIndex);
+                System.out.println("Distributor deleted!");
+                distListViewUpdate();
+            }
+        } catch (FileNotFoundException e) {
+            //smth
         }
     }
 
     public void handleUserClick() throws FileNotFoundException {
         User u = new User();
-        if (AddNewUser.display("New User", u) == true) {
+        if (AddNewUser.display("New User", u, false) == true) {
             System.out.println("New user was added.");
             VODSystemFX.addToAllUsers(u); //dodawanie do globalnej listy
             userListViewUpdate(); // Update listView
+        }
+    }
+
+    // Opens object info. Admin can delete object
+    public void handleUserListClick() throws FileNotFoundException {
+        int selectedIndex = userListView.getSelectionModel().getSelectedIndex();
+        if (AddNewUser.display("User info", VODSystemFX.getAllUsers().get(selectedIndex), true)) {
+            VODSystemFX.removeUser(selectedIndex);
+            System.out.println("User deleted!");
+            userListViewUpdate();
         }
     }
 
@@ -83,17 +112,12 @@ public class FXMLVODSystemController implements Initializable {
         AddNewProductChoose.display("New Product");
         try {
             productListViewUpdate();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error when updating product list!");
         }
         System.out.println(VODSystemFX.getAllMovies().get(0).getTitle() + " is the title");
     }
-    
-    public void handleUserListClick() throws FileNotFoundException {
-        AddNewUser.display("User info", VODSystemFX.getAllUsers().get(userListView.getSelectionModel().getSelectedIndex())); 
-        System.out.println("User clicked!");
-    }
-    
+
     public void handleProductListClick() throws FileNotFoundException {
         String tit = VODSystemFX.getAllProducts().get(productsListView.getSelectionModel().getSelectedIndex()).getTitle();
         System.out.println(tit);
@@ -111,14 +135,15 @@ public class FXMLVODSystemController implements Initializable {
     // Executing when closing program
     public void saveProgram() {
         System.out.println("Status saved.");
-//        VODSystemFX.saveProgram(); //-- nie mozna wywolac niestatyczna
-//        window.close(); //-- nie mozna sie odwolac
+        VODSystemFX.saveProgram();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        int i = 5;
+        int i = 1;
+//        long sleepMilis = 100;
         while (i > 0) {
+//            sleep();
             User u = new User();
             VODSystemFX.addToAllUsers(u);
             userListViewUpdate();
@@ -126,17 +151,24 @@ public class FXMLVODSystemController implements Initializable {
             try {
                 Distributor d = new Distributor();
                 VODSystemFX.addToAllDistributors(d);
-//                distListViewUpdate();
+                distListViewUpdate();
                 
+                System.out.println("Creatubg series...");
+                Series s = new Series(d);
+                System.out.println("Series info:");
+                System.out.println(s.getTitle());
+                System.out.println(s.getPrice());
+                System.out.println("Season info:");
+                System.out.println(s.getSeasons().get(0).getTitle());
+                System.out.println(s.getSeasons().get(0).getPrice());
+//                
             } catch (FileNotFoundException e){
                 System.out.println("Error when creating distributor");
-            }
+            } 
             i--;
         }
+        System.out.println("Running some code on start...");
         
-//            VODSystemFX.addToAllDistributors(d);
-//            FXMLVODSystemController.distListViewUpdate();
-            System.out.println("Running some code on start...");
-            
+
     }
 }

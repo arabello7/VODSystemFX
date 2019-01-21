@@ -82,9 +82,10 @@ public class AddNewDistributor {
         grid.setAlignment(Pos.CENTER);
     }
     
-    protected static void displayStandard(String title) {
+    // ifEdit true - admin can delete object
+    protected static void displayStandard(String title, boolean ifEdit) {
         window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL); // focus on that window
+        window.initModality(Modality.APPLICATION_MODAL); // Focus on that window
         window.setTitle(title);
         window.setMinWidth(400);
         window.setMinHeight(450);
@@ -100,17 +101,16 @@ public class AddNewDistributor {
             window.close();
         });
 
-        applyButton = new Button("Apply");
+        applyButton = new Button("Apply"); // When opening for creation
+        if(ifEdit) applyButton.setText("Delete"); // When opening for edition
         applyButton.setOnAction(e -> {
             answer = true;
             window.close();
         });
     }
 
-    public static boolean display(String title, Distributor d) throws FileNotFoundException {
-        displayStandard(title);
-        
-        System.out.println("Using distributor method");
+    public static boolean display(String title, Distributor d, boolean ifEdit) throws FileNotFoundException {
+        displayStandard(title, ifEdit);
          
         //Name fields
         label0 = new Label("Name:");
@@ -133,12 +133,11 @@ public class AddNewDistributor {
 
         grid.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(grid, 300, 200); //resolution
+        Scene scene = new Scene(grid, 300, 200); // Resolution
         window.setScene(scene);
         
-        window.showAndWait(); //waiting for?
+        window.showAndWait();
         
-//        dist = d;
         return answer;
     }
 

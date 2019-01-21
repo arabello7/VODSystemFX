@@ -36,8 +36,8 @@ public class AddNewMovie extends AddNewDistributor {
 //        input7.setVisible(false);
 //    }
 
-    public static boolean display(String title, Movie m) throws FileNotFoundException { //potem M na T<>
-        displayStandard(title); //-wziete z ADDNew Disst czy warto?     
+    public static boolean display(String title, Movie m, boolean ifEdit) throws FileNotFoundException { //potem M na T<>
+        displayStandard(title, ifEdit); //-wziete z ADDNew Disst czy warto?     
         Product p = m;
         drawProductWindow(p);
         

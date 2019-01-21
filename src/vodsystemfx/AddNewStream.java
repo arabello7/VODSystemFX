@@ -32,8 +32,8 @@ public class AddNewStream extends AddNewDistributor {
 //        input7 = new TextField();
 //        input7.setVisible(false);
 
-    public static boolean display(String title, Stream s) throws FileNotFoundException { //potem M na T<>
-        displayStandard(title); //-wziete z ADDNew Disst czy warto?     
+    public static boolean display(String title, Stream s, boolean ifEdit) throws FileNotFoundException { //potem M na T<>
+        displayStandard(title, ifEdit); //-wziete z ADDNew Disst czy warto?     
         Product p = s;
         drawProductWindow(p);
         
