@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author tomas
  */
-public class User {
+public class User implements Runnable {
 
     private String code; //must be also id and name?
     private String birthDate;
@@ -21,6 +21,12 @@ public class User {
     private String creditCard;
     private List<Product> userProductList = new ArrayList<>();
 
+    @Override
+    public void run() {
+        //kupowanie produktu
+        //ogladanie
+    }
+    
     public final void randomizeUser() {
         code = Long.toHexString(Double.doubleToLongBits(Math.random()) / 1000);
         Random rand = new Random();

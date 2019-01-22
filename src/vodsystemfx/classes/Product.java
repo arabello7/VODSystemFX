@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -158,5 +159,20 @@ public class Product {
     public void setUsersRating(double usersRating) {
         this.usersRating = usersRating;
     }
+
+    // *Poniższe metody zastosowałem, aby móc odwołać się do pól np. filmu po pobraniu go z listy produktów
+    //@overridable
+    public String getTrailerUrl() {
+        return null;
+    }
+    //@overridable
+    public int getViewingPeriod() {
+        return -1;
+    }
+    //@overridable
+    public List<Season> getSeasons() {
+        return null;
+    }
+    
 
 }

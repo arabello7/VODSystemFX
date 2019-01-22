@@ -24,21 +24,21 @@ import vodsystemfx.classes.Stream;
  */
 public class AddNewProductChoose {
 
-    public static boolean apply = false;
-
-    public static boolean isApply() {
-        return apply;
-    }
-
-    public static void setApply(boolean apply) {
-        AddNewProductChoose.apply = apply;
-    }
+//    public static boolean apply = false;
+//
+//    public static boolean isApply() {
+//        return apply;
+//    }
+//
+//    public static void setApply(boolean apply) {
+//        AddNewProductChoose.apply = apply;
+//    }
 
     public void handleMovieClick() {
 //        boolean bool = AddNewMovie.display("New Movie");
     }
 
-    public static void display(String title) throws FileNotFoundException {
+    public static void display(String title) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setMinWidth(400);
@@ -84,14 +84,15 @@ public class AddNewProductChoose {
                 Distributor d = VODSystemFX.getOneDistributor(0); //losowy
                 Movie m = new Movie(d); //warunek, ze jest Dystrybutor!
                 if (AddNewMovie.display("New Movie", m, false) == true) {
-                    d.addMovie(m);
-//                    VODSystemFX.addToAllMovies(m);
+//                    d.addMovie(m);
                     VODSystemFX.addToAllProducts(m);
                     System.out.println("Movie accepted.");
                 }
 
             } catch (FileNotFoundException ex) {
                 System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("First create Distributor");
             }
         });
 
@@ -104,7 +105,9 @@ public class AddNewProductChoose {
                 }
 //                d.addProduct(st);
             } catch (FileNotFoundException ex) {
-                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+                System.out.println("File Not Found!"); //trzeba wtedy w tamtych tez obslugiwać?
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("First create Distributor!");
             }
         });
 

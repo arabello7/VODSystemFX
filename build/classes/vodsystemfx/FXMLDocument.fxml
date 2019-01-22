@@ -6,9 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="1209.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vodsystemfx.FXMLVODSystemController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vodsystemfx.FXMLVODSystemController">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="70.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="942.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="newUserBtn" mnemonicParsing="false" onAction="#handleUserClick" prefHeight="31.0" prefWidth="151.0" text="New User">
                <HBox.margin>
@@ -26,11 +26,11 @@
       </HBox>
    </bottom>
    <left>
-      <HBox alignment="CENTER" prefHeight="355.0" prefWidth="947.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="355.0" prefWidth="932.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="355.0" prefWidth="150.0">
+            <VBox prefHeight="355.0" prefWidth="180.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Users" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER" wrappingWidth="180.09375" />
                   <ListView fx:id="userListView" onMouseClicked="#handleUserListClick" prefHeight="342.0" prefWidth="189.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -40,29 +40,26 @@
             </VBox>
             <VBox prefHeight="355.0" prefWidth="188.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distributors" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distributors" textAlignment="CENTER" wrappingWidth="189.20458984375" />
                   <ListView fx:id="distListView" onMouseClicked="#handleDistributorListClick" prefHeight="335.0" prefWidth="125.0" />
                </children>
             </VBox>
             <VBox prefHeight="355.0" prefWidth="181.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" textAlignment="CENTER" wrappingWidth="194.28515625" />
-                  <ListView fx:id="productsListView" onMouseClicked="#handleProductListClick" prefHeight="334.0" prefWidth="181.0" />
-               </children>
-            </VBox>
-            <VBox prefHeight="355.0" prefWidth="165.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Series" wrappingWidth="107.86962890625" />
-                  <ListView fx:id="seriesListView" prefHeight="359.0" prefWidth="165.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" textAlignment="CENTER" wrappingWidth="201.28515625" />
+                  <ListView fx:id="productsListView" onMouseClicked="#handleProductListClick" prefHeight="334.0" prefWidth="217.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="355.0" prefWidth="191.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product Searching" textAlignment="CENTER" wrappingWidth="178.28515625" />
-                  <TextField prefHeight="36.0" prefWidth="186.0" text="ex. Nicolas Cage">
+                  <TextField alignment="CENTER" prefHeight="36.0" prefWidth="149.0" promptText="ex. Nicolas Cage">
                      <VBox.margin>
-                        <Insets bottom="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </TextField>
                   <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="147.0" text="Search by title">
                      <VBox.margin>

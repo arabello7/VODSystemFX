@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Movie;
 import vodsystemfx.classes.Product;
+import vodsystemfx.classes.Series;
 import vodsystemfx.classes.User;
 
 /**
@@ -31,12 +32,19 @@ public class VODSystemFX extends Application {
     private static List<User> allUsers = new ArrayList<>();
     private static List<Product> allProducts = new ArrayList<>();
     private static List<Movie> allMovies = new ArrayList<>();
+//    private static List<Product> allAll = collect(new ArrayList<Movie>(), new ArrayList<Series>());
 
+//    static List<Product> collect(List<? extends Product> a1, List<? extends Product> a2) {
+//        List<Product> collected = new ArrayList<>();
+//        collected.addAll(a1);
+//        return collected;
+//    }
+    
     public static List<Movie> getAllMovies() {
         return allMovies;
     }
 
-    public static void addToAllMovies(Movie m) {
+    public void addToAllMovies(Movie m) {
         allMovies.add(m);
     }
 
@@ -85,7 +93,7 @@ public class VODSystemFX extends Application {
 
     }
 
-    //Uruchomienie okna aplikacji
+    // Uruchomienie okna aplikacji
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -97,7 +105,7 @@ public class VODSystemFX extends Application {
             e.consume(); //canceling prevoius action
             saveProgram();
         });
-        //Zawartość okna wczytywana z pliku .fxml
+        // Zawartość okna wczytywana z pliku .fxml
         Scene scene = new Scene(root); // rozmiar okna można dać
 
 //        Button button = new Button("Go to 2nd scene");

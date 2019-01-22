@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -37,6 +39,7 @@ public class FXMLVODSystemController implements Initializable {
     private final ObservableList userObservableList = FXCollections.observableArrayList();
     private final ObservableList movieObservableList = FXCollections.observableArrayList();
     private static ObservableList productsObservableList = FXCollections.observableArrayList();
+    private ExecutorService executor = Executors.newCachedThreadPool(); // For managing many threads [.submit()] to use
 
     public void distListViewUpdate() {
         distListView.getItems().clear();
@@ -72,6 +75,7 @@ public class FXMLVODSystemController implements Initializable {
             VODSystemFX.addToAllDistributors(d); // Dodawanie do globalnej listy
             System.out.println("Distributor added.");
             distListViewUpdate(); // Update listView
+            executor.submit(d);
         }
     }
 
@@ -115,7 +119,6 @@ public class FXMLVODSystemController implements Initializable {
         } catch (Exception e) {
             System.out.println("Error when updating product list!");
         }
-        System.out.println(VODSystemFX.getAllMovies().get(0).getTitle() + " is the title");
     }
 
     public void handleProductListClick() throws FileNotFoundException {
@@ -138,33 +141,46 @@ public class FXMLVODSystemController implements Initializable {
         VODSystemFX.saveProgram();
     }
 
+    //musi byc w tle
+    public void updateListViews() throws InterruptedException {
+        for (int i = 0; i < 100; i++) {
+            sleep(100);
+            distListViewUpdate();
+        }
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         int i = 1;
 //        long sleepMilis = 100;
-        while (i > 0) {
+        while (i > 3) {
 //            sleep();
             User u = new User();
             VODSystemFX.addToAllUsers(u);
             userListViewUpdate();
-
-            try {
-                Distributor d = new Distributor();
-                VODSystemFX.addToAllDistributors(d);
-                distListViewUpdate();
+//            try {
+//                VODSystemFX.sprawdzenieAll();
+//            try {
+//                Distributor d = new Distributor();
+//                new Thread(d).start();
+//                VODSystemFX.addToAllDistributors(d);
+//                distListViewUpdate();
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(FXMLVODSystemController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
                 
-                System.out.println("Creatubg series...");
-                Series s = new Series(d);
-                System.out.println("Series info:");
-                System.out.println(s.getTitle());
-                System.out.println(s.getPrice());
-                System.out.println("Season info:");
-                System.out.println(s.getSeasons().get(0).getTitle());
-                System.out.println(s.getSeasons().get(0).getPrice());
-//                
-            } catch (FileNotFoundException e){
-                System.out.println("Error when creating distributor");
-            } 
+//                System.out.println("Creatubg series...");
+//                Series s = new Series(d);
+//                System.out.println("Series info:");
+//                System.out.println(s.getTitle());
+//                System.out.println(s.getPrice());
+//                System.out.println("Season info:");
+//                System.out.println(s.getSeasons().get(0).getTitle());
+//                System.out.println(s.getSeasons().get(0).getPrice());
+////                
+//            } catch (FileNotFoundException e){
+//                System.out.println("Error when creating distributor");
+//            } 
             i--;
         }
         System.out.println("Running some code on start...");
