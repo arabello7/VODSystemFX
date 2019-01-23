@@ -6,6 +6,7 @@
 package vodsystemfx;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -39,35 +40,76 @@ public class VODSystemFX extends Application {
 //        collected.addAll(a1);
 //        return collected;
 //    }
-    
-    public static List<Movie> getAllMovies() {
-        return allMovies;
-    }
-
-    public void addToAllMovies(Movie m) {
-        allMovies.add(m);
-    }
-
+//    public static List<Movie> getAllMovies() {
+//        return allMovies;
+//    }
+//
+//    public void addToAllMovies(Movie m) {
+//        allMovies.add(m);
+//    }
     public static List<Product> getAllProducts() {
         return allProducts;
     }
 
-    public static void addToAllProducts(Product p) {
+    // Return index of added element
+    public static int addToAllProducts(Product p) {
         allProducts.add(p);
+        return allProducts.lastIndexOf(p);
+    }
+    
+//    public static void test () {
+//        User u = new User();
+//        
+//        u.buySingleProduct(0); //musi byc produkt juz stworzony
+//        u.buySingleProduct(1); //musi byc produkt juz stworzony
+//        System.out.println("Product 0 bought");
+////        removeProduct(0);
+////        System.out.println("Prod 0 deleted");
+//        System.out.println( VODSystemFX.getAllProducts().get(u.getProductList().get(0)).getTitle() + "- pierwszy produkt na liscie");
+//             removeProduct(0);
+//        System.out.println("Prod 0 deleted");
+//        try{
+//            System.out.println( VODSystemFX.getAllProducts().get(u.getProductList().get(0)).getTitle() + "- pierwszy produkt na liscie");
+//        } catch (Exception ex) {
+//            System.out.println("Error. List empty");
+//        }
+//        
+//       
+//    }
+
+    //** Used when deleting product. Method goes through all Users and deletes product index on their prrivate lists.
+    // Note that privateList[0] is not the same as on globalList[0]
+    // When deleting f.ex. globalList[4] all next objects's index drops by -1 so I do exacly same on private lists.
+    //@globalIndex - index of product on allProducts list
+    //@removeIndex - index of product to remove from allProducts list
+    //@localIndex - index on user's private list
+    public static void removeProduct(int removeIndex) {
+        allProducts.remove(removeIndex);
+        for (User u : allUsers) {
+            for (int localIndex = 0; localIndex < u.getProductList().size(); localIndex++) {
+                if (u.getProductList().get(localIndex) > removeIndex) u.reduceProductIndex(localIndex);
+                else if (u.getProductList().get(localIndex) == removeIndex) u.removeProduct(localIndex);
+            }
+        }
     }
 
     public static void addToAllDistributors(Distributor d) {
         allDistributors.add(d);
     }
-    
-    public static void removeDistributor (int index) {
+
+    // ** Used when deleting distributor. Removing distributor also remove all its products
+    // @global index - index of product on allProducts list
+    public static void removeDistributor(int index) {
+        for (int globalIndex : getOneDistributor(index).getProductList()) {
+            removeProduct(globalIndex);
+        }
         allDistributors.remove(index);
     }
 
     public static List<Distributor> getAllDistributors() {
         return allDistributors;
     }
-    
+
     public static Distributor getOneDistributor(int i) {
         return allDistributors.get(i);
     }
@@ -79,8 +121,8 @@ public class VODSystemFX extends Application {
     public static void addToAllUsers(User u) {
         allUsers.add(u);
     }
-    
-    public static void removeUser (int index) {
+
+    public static void removeUser(int index) {
         allUsers.remove(index);
     }
 
@@ -88,9 +130,7 @@ public class VODSystemFX extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {//throws FileNotFoundException {
-        System.out.println("Main VOD przed start");
         launch(args); //launching application start method
-
     }
 
     // Uruchomienie okna aplikacji

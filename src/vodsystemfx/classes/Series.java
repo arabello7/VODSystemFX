@@ -18,7 +18,7 @@ public class Series extends Product {
 
     public Series(Distributor dist) {
         super(dist);
-        System.out.println("generating seasins...");
+        System.out.println("generating seasons...");
         generateSeasons(); 
     }
 

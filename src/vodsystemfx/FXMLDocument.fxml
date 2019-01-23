@@ -53,7 +53,7 @@
             <VBox alignment="CENTER" prefHeight="355.0" prefWidth="191.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product Searching" textAlignment="CENTER" wrappingWidth="178.28515625" />
-                  <TextField alignment="CENTER" prefHeight="36.0" prefWidth="149.0" promptText="ex. Nicolas Cage">
+                  <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="36.0" prefWidth="149.0" promptText="ex. Nicolas Cage">
                      <VBox.margin>
                         <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
@@ -61,12 +61,16 @@
                         <Insets />
                      </opaqueInsets>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="147.0" text="Search by title">
+                  <Button mnemonicParsing="false" onAction="#handleSearchTitleClick" prefHeight="29.0" prefWidth="147.0" text="Search by title">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="145.0" text="Search by actors" />
+                  <Button mnemonicParsing="false" onAction="#handleSearchActorClick" prefHeight="34.0" prefWidth="145.0" text="Search by actors">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#productListViewUpdate" prefHeight="31.0" prefWidth="145.0" text="Refresh" />
                </children>
             </VBox>
          </children>

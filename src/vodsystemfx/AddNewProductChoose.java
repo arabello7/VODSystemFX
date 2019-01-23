@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Movie;
+import vodsystemfx.classes.Series;
 import vodsystemfx.classes.Stream;
 
 /**
@@ -71,21 +72,28 @@ public class AddNewProductChoose {
         GridPane.setConstraints(backBtn, 0, 5);
 
         seriesBtn.setOnAction(e -> {
-//            try {
-//                
-//                AddNewProduct.display("New Series");
-//            } catch (FileNotFoundException ex) {
-//                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
-//            }
+            try {
+                Distributor d = VODSystemFX.getOneDistributor(0); //losowy
+                Series s = new Series(d); 
+                if (ProductWindow.display("New Series", s, false) == true) {
+//                    d.addProduct(s);
+                    d.addProduct(VODSystemFX.addToAllProducts(s));
+//                    d.addProduct(VODSystemFX.getAllProducts().lastIndexOf(s)); //czy ten last index dobrze dziala?
+                    System.out.println("Series accepted.");
+                }
+            } catch (FileNotFoundException ex) {
+                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("First create Distributor");
+            }
         });
 
         movieBtn.setOnAction(e -> {
             try {
                 Distributor d = VODSystemFX.getOneDistributor(0); //losowy
                 Movie m = new Movie(d); //warunek, ze jest Dystrybutor!
-                if (AddNewMovie.display("New Movie", m, false) == true) {
-//                    d.addMovie(m);
-                    VODSystemFX.addToAllProducts(m);
+                if (ProductWindow.display("New Movie", m, false) == true) {
+                    d.addProduct(VODSystemFX.addToAllProducts(m));
                     System.out.println("Movie accepted.");
                 }
 
@@ -100,7 +108,7 @@ public class AddNewProductChoose {
             try {
                 Distributor d = VODSystemFX.getOneDistributor(0);
                 Stream st = new Stream(d);
-                if (AddNewStream.display("New Stream", st, false)) {
+                if (ProductWindow.display("New Stream", st, false)) {
                     VODSystemFX.addToAllProducts(st);
                 }
 //                d.addProduct(st);

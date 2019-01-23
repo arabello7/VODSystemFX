@@ -11,7 +11,6 @@
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewMovie.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Series.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewStream.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/FilmSerialStream.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Product.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/FXMLVODSystemController.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewSeries.java</file>
@@ -21,6 +20,7 @@
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/NewProduct.fxml</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Movie.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Season.java</file>
+            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/ProductWindow.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/VODSystemFX.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/FileReader.java</file>
         </group>

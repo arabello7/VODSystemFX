@@ -35,6 +35,7 @@ public class AddNewDistributor {
     protected static Button applyButton;
     //pododawane wszystkie labele z AddnewProduct
     
+    //do usuniecia
     protected static <T extends Product> void drawProductWindow (T p){
         //Name fields
         label0 = new Label("Name:");
@@ -82,8 +83,9 @@ public class AddNewDistributor {
         grid.setAlignment(Pos.CENTER);
     }
     
-    // ifEdit true - admin can delete object
+    // ifEdit == true - admin can delete object
     protected static void displayStandard(String title, boolean ifEdit) {
+        answer = false;
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL); // Focus on that window
         window.setTitle(title);

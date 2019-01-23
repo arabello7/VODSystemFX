@@ -25,7 +25,7 @@ import vodsystemfx.VODSystemFX;
  */
 public class Distributor implements Runnable {
 
-    private List<Product> productList = new ArrayList<>();
+    private List<Integer> productList = new ArrayList<>();
     private String name;
     private double finance;
     private final int FILESIZE = 16; //input file for randomizer
@@ -48,7 +48,7 @@ public class Distributor implements Runnable {
 //            case 1:
                    Movie m = new Movie(this);
 //                   addProduct(m); //moze potem do usuwania
-                   VODSystemFX.addToAllProducts(m);
+                   addProduct(VODSystemFX.addToAllProducts(m));
                    System.out.println(this.getName() + " added new product.");
 //            case 2:
 
@@ -77,7 +77,7 @@ public class Distributor implements Runnable {
         finance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
     }
 
-    public List<Product> getProductList() {
+    public List<Integer> getProductList() {
         return productList;
     }
 
@@ -99,32 +99,18 @@ public class Distributor implements Runnable {
 
     public void makeAgreement() {
     }
-
-    public void addMovie(Movie m) {
-        productList.add(m);
+//
+//    public void addMovie(Movie m) {
+////        productList.add(m);
+//    }
+    
+    public void addProduct(int globalIndex) {
+        productList.add(globalIndex);
     }
     
-    public void addProduct(Product p) {
-        productList.add(p);
-    }
-
-    /*
-    public void addSeries() {
-        int seasons=0, episodes=0; //pobierane z tabelki (od razu z realease date można)
-        Product p = new Series(this, seasons, episodes);
-        for (int i = 0; i < episodes; i++) {
-            int realease = 12; //pobierane z okna/losowo
-            Product p2 = new Episode(this, realease);
-        }
-    }*/
-    //addEpisode tylko w ramach serialu
-    /*
-    public void addStream() {
-        Product p = new LiveStream();
-        productList.add(p);
-    }*/
-    public void removeProduct(Product p) {
-        productList.remove(p);
+    //
+    public void removeProduct(int index) {
+        productList.remove(index);
     }
 
     public void setDiscount() {

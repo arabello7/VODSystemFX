@@ -49,6 +49,7 @@ public class AddNewMovie extends AddNewDistributor {
         label7 = new Label("Viewing Period:         ");
         input7 = new TextField(String.valueOf(m.getViewingPeriod()));
 
+        // Bottom GridPane
         GridPane bottomGrid = new GridPane();
         GridPane.setConstraints(label6, 0, 0);
         GridPane.setConstraints(input6, 1, 0);

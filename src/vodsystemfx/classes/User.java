@@ -19,14 +19,14 @@ public class User implements Runnable {
     private String birthDate;
     private String mail;
     private String creditCard;
-    private List<Product> userProductList = new ArrayList<>();
+    private List<Integer> productList = new ArrayList<>();
 
     @Override
     public void run() {
         //kupowanie produktu
         //ogladanie
     }
-    
+
     public final void randomizeUser() {
         code = Long.toHexString(Double.doubleToLongBits(Math.random()) / 1000);
         Random rand = new Random();
@@ -44,12 +44,27 @@ public class User implements Runnable {
     }
 
     public void buySeries(Series s) {
-        userProductList.addAll(s.getSeasons()); //sprawdzic czy to nie usuwa starych twoich
+//        userProductList.addAll(s.getSeasons()); //sprawdzic czy to nie usuwa starych twoich
     }
 
-    // ?
-    public void buySingleProduct(Product p) {
-//        productList.add(p);
+    // losuje indeks na globalnej i kupuje
+    public void buySingleProduct(int globalIndex) {
+        productList.add(globalIndex);
+    }
+
+    public List<Integer> getProductList() {
+        return productList;
+    }
+
+    // Deletes element on local list using local index
+    public void removeProduct(int localIndex) {
+        productList.remove(localIndex);
+    }
+
+    //jeżeli będzie wolno dzialalo to sortowanie przy dodawani na liste
+    // ** Changes value of element on local list by -1
+    public void reduceProductIndex(int localIndex) {
+        productList.set(localIndex, productList.get(localIndex)-1 );
     }
 
     public String getCode() {
