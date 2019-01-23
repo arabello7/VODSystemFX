@@ -7,9 +7,11 @@ package vodsystemfx;
 import java.io.FileNotFoundException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -65,6 +67,18 @@ public class ProductWindow extends AddNewDistributor {
 
     public static boolean display(String title, Product p, boolean ifEdit) throws FileNotFoundException {
         displayStandard(title, ifEdit);
+        
+//        GridPane topGrid = new GridPane();
+        //Image field
+        ImageView imageView = new ImageView();
+        imageView.setImage(p.getPhoto());
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        imageView.setCache(true); //improve performance
+        
+        
+//        LineChart chart = new LineChart(, yAxis);
+//        topGrid.add
         
         //Name fields
         label0 = new Label("Name:");
@@ -136,7 +150,7 @@ public class ProductWindow extends AddNewDistributor {
         bottomGrid.setHgap(10);
         
         VBox vbox = new VBox(); //zmienic na ten gora dol prawo lewo
-        vbox.getChildren().addAll(grid, bottomGrid);
+        vbox.getChildren().addAll(imageView, grid, bottomGrid);
         vbox.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(vbox, 500, 500); //resolution

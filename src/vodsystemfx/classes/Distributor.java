@@ -5,18 +5,10 @@
  */
 package vodsystemfx.classes;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vodsystemfx.FXMLVODSystemController;
 import vodsystemfx.VODSystemFX;
 
 /**
@@ -30,6 +22,11 @@ public class Distributor implements Runnable {
     private double finance;
     private final int FILESIZE = 16; //input file for randomizer
 
+    public Distributor() {
+        this.name = FileWorm.readFile(Randomize.randomInt(0, FILESIZE), "distributors.txt");
+        this.finance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
+    }
+
     @Override
     public void run() {
         while (true) { //warunek przeładowania dystrybutorów
@@ -38,43 +35,27 @@ public class Distributor implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Distributor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        
-//        int i = (int) Math.random() * 3;
-////        System.out.println(i + "- liczba");
-//        switch (i) {
-//            case 0: 
+
+            int i = Randomize.randomInt(0, 4);
+            switch (i) {
+                case 0:
 //                //negocjuj cene randomowego produktu z listy
-//            case 1:
-                   Movie m = new Movie(this);
-//                   addProduct(m); //moze potem do usuwania
-                   addProduct(VODSystemFX.addToAllProducts(m));
-                   System.out.println(this.getName() + " added new product.");
-//            case 2:
-
-//            FXMLVODSystemController.class
-        }
-    }
-
-    public final void randomizeDistributor() throws FileNotFoundException {
-        Random rand = new Random();
-        int index = rand.nextInt(FILESIZE);
-        System.out.println(index);
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader("textfiles/distributors.txt"));
-            while (index > 0) {
-                reader.readLine();
-                index--;
+                case 1:
+                    Movie m = new Movie(this);
+                    addProduct(VODSystemFX.addToAllProducts(m));
+                    System.out.println(this.getName() + " added new movie.");
+                case 2:
+                    Series s = new Series(this);
+                    addProduct(VODSystemFX.addToAllProducts(s));
+                    System.out.println(this.getName() + " added new series.");
+                case 3:
+                    Stream st = new Stream(this);
+                    addProduct(VODSystemFX.addToAllProducts(st));
+                    System.out.println(this.getName() + " added new stream.");
+                default:
+                    System.out.println(this.getName() + " is doing nothing at all.");
             }
-            name = reader.readLine();
-            reader.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found!");
-        } catch (IOException ex) {
-            System.out.println("In/Out Exception");
         }
-        finance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
     }
 
     public List<Integer> getProductList() {
@@ -93,21 +74,17 @@ public class Distributor implements Runnable {
         return finance;
     }
 
-    public Distributor() throws FileNotFoundException {
-        randomizeDistributor();
-    }
-
     public void makeAgreement() {
     }
 //
 //    public void addMovie(Movie m) {
 ////        productList.add(m);
 //    }
-    
+
     public void addProduct(int globalIndex) {
         productList.add(globalIndex);
     }
-    
+
     //
     public void removeProduct(int index) {
         productList.remove(index);

@@ -197,8 +197,6 @@ public class FXMLVODSystemController implements Initializable {
                 VODSystemFX.addToAllProducts(m);
                 Movie m2 = new Movie(d);
                 VODSystemFX.addToAllProducts(m2);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(FXMLVODSystemController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception e) {
                 System.out.println("cos sie zjebalo");
             }

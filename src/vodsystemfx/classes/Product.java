@@ -5,12 +5,9 @@
  */
 package vodsystemfx.classes;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -18,7 +15,7 @@ import java.util.Random;
  */
 public class Product {
 
-    protected String photo; //what type?
+    protected Image photo;
     protected String title;
     protected double price;
     protected String description; // Moze lorem ipsum
@@ -26,74 +23,52 @@ public class Product {
     protected int duration;
     protected Distributor distributor; //Losuj z dostepnych
     protected String[] prodCountries = new String[2]; //ma to sens?
-    protected String[] actors;
+    protected String[] actors = new String[3];
     protected double usersRating; //Na poczatku zero, potem sie zmienia, ludzie losowo glosuja
     protected final int COUNTRIESSIZE = 199; // Countries in text file
     protected final int TITLESIZE = 16;
-    //actors ?
-
-    public String readFile(int line, String file) {
-        BufferedReader reader;
-        String text = "";
-        try {
-            reader = new BufferedReader(new FileReader("textfiles/" + file));
-            while (line > 0) {
-                reader.readLine();
-                line--;
-            }
-            text = reader.readLine();
-            reader.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found!");
-        } catch (IOException ex) {
-            System.out.println("In/Out Exception");
-        }
-        return text;
-    }
+    protected final int ACTORSSIZE = 188;//do sprawdzenia
 
     public void randomizeProduct() {
-        photo = "<not available";
-        Random rand = new Random();
+        try {
+            photo = new Image("images/cage2.jpg"); //cage+randomint
+        } catch (IllegalArgumentException e) {
+            System.out.println("Photo not found!");
+        }
 
         //Generating product title
-        int line = rand.nextInt(TITLESIZE);
-        title = readFile(line, "title1.txt") + " ";
-        line = rand.nextInt(TITLESIZE);
-        title += readFile(line, "title2.txt") + " ";
-        line = rand.nextInt(TITLESIZE);
-        title += readFile(line, "title3.txt");
+        title = FileWorm.readFile(Randomize.randomInt(0, TITLESIZE), "title1.txt") + " ";
+        title += FileWorm.readFile(Randomize.randomInt(0, TITLESIZE), "title2.txt") + " ";
+        title += FileWorm.readFile(Randomize.randomInt(0, TITLESIZE), "title3.txt");
 
+        Random rand = new Random(); //jak wiecej razy to metoda w Randomize
         price = Math.round(rand.nextDouble() * 20 * 100.0) / 100.0;
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper malesuada semper. Donec vestibulum ipsum non est aliquam dictum. Quisque."; // albo uniwersalna historia na podstawie wylosowanych pol
 
         //Generating countries
-        line = rand.nextInt(COUNTRIESSIZE);
-        prodCountries[0] = readFile(line, "countries.txt");
-        line = rand.nextInt(COUNTRIESSIZE);
-        prodCountries[1] = readFile(line, "countries.txt");
+        prodCountries[0] = FileWorm.readFile(Randomize.randomInt(0, COUNTRIESSIZE), "countries.txt");
+        prodCountries[1] = FileWorm.readFile(Randomize.randomInt(0, COUNTRIESSIZE), "countries.txt");
 
-        int num = rand.nextInt(27) + 1;
-        productionDate = Integer.toString(num) + ".";
-        num = rand.nextInt(11) + 1;
-        productionDate += Integer.toString(num) + ".";
-        num = rand.nextInt(119) + 1900;
-        productionDate += Integer.toString(num);
-        num = rand.nextInt(200) + 40;
-        duration = num;
+        productionDate = Integer.toString(Randomize.randomInt(1, 28)) + ".";
+        productionDate += Integer.toString(Randomize.randomInt(1, 12)) + ".";
+        productionDate += Integer.toString(Randomize.randomInt(1900, 2019));
+        
+        duration = Randomize.randomInt(40, 240);
+        
+        //Generating actors
+        actors[0] = "Nicolas Cage"; 
+        actors[1] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
+        actors[2] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
     }
 
     public Product(Distributor d) {
+        randomizeProduct();
         this.distributor = d;
         usersRating = 0.0;
-        randomizeProduct();
     }
 
-    public String getPhoto() {
+    public Image getPhoto() {
         return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public String getTitle() {
