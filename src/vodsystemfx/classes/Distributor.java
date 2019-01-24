@@ -19,13 +19,23 @@ public class Distributor implements Runnable {
 
     private List<Integer> productList = new ArrayList<>();
     private String name;
-    private double finance;
-    private double percFromSales;
+    private double accountBalance;
+    private String agreementType; // Monthly salary or for each product purchase
+    private double salary; // % of purchase price or amount of money depending on agreementType
     private final int FILESIZE = 16; //input file for randomizer
 
     public Distributor() {
         this.name = FileWorm.readFile(Randomize.randomInt(0, FILESIZE), "distributors.txt");
-        this.finance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
+        this.accountBalance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
+        int choose = Randomize.randomInt(0, 1);
+        switch (choose) {
+            case 0:
+                this.agreementType = "ProductPricing";
+                this.salary = 0.5;
+            case 1:
+                this.agreementType = "MonthlyPricing";
+                this.salary = 1000;
+        }
     }
 
     @Override
@@ -59,6 +69,20 @@ public class Distributor implements Runnable {
         }
     }
 
+    // Only used with agreementType monthlyPricing
+    public void collectSalary() {
+        this.accountBalance += this.salary;
+    }
+
+    // Used when user pays for purchase
+    public void getMoneyTransfer(double money) {
+        this.accountBalance += money;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
     public List<Integer> getProductList() {
         return productList;
     }
@@ -71,21 +95,13 @@ public class Distributor implements Runnable {
         this.name = name;
     }
 
-    public double getFinance() {
-        return finance;
+    public double getAccountBalance() {
+        return accountBalance;
     }
 
-    // Raise percentage of incomes from product sales by 1.05
-    // jeśli nie abonament...
+    // Raise percentage of incomes by 1.05
     public void negotiateAgreement() {
-//        VODSystemFX.getAllProducts().get(Randomize.randomInt(0, productList.size())).setPercFromSales(1.05);
-        //jezeli abonament == null to to wyzej, else podnosi abonament
-    }
-    
-    public void setPercFromSales(double percent) {
-        if ((this.percFromSales * percent) <= 1.0) {
-            this.percFromSales *= percent;
-        }
+        salary *= 1.05;
     }
 
     public void addProduct(int globalIndex) {

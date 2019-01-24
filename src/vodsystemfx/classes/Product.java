@@ -8,8 +8,6 @@ package vodsystemfx.classes;
 import java.util.List;
 import java.util.Random;
 import javafx.scene.image.Image;
-import vodsystemfx.VODSystemFX;
-
 /**
  *
  * @author tomas
@@ -66,6 +64,11 @@ public class Product {
         randomizeProduct();
         this.distributor = d;
         usersRating = 0.0;
+    }
+    
+    // When user watches product
+    public void displayProduct() {
+        //bierze aktualny czas(miesiąc) i dopisuje +1
     }
 
     public Image getPhoto() {

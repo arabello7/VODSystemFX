@@ -6,22 +6,19 @@
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/User.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/FXMLDocument.fxml</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/FileWorm.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewProductChoose.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Stream.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewDistributor.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewMovie.java</file>
+            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/UserWindow.java</file>
+            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/SubscriptionWindow.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Series.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewStream.java</file>
+            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/NewProductWindow.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Product.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Randomize.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/FXMLVODSystemController.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewSeries.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/AddNewUser.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Episode.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Distributor.java</file>
-            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/NewProduct.fxml</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Movie.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/classes/Season.java</file>
+            <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/DistributorWindow.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/ProductWindow.java</file>
             <file>file:/C:/Users/tomas/Documents/C++%20documents/Obiektowość/VODSystemFX/src/vodsystemfx/VODSystemFX.java</file>
         </group>

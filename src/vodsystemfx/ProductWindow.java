@@ -21,7 +21,7 @@ import vodsystemfx.classes.Product;
  *
  * @author tomas
  */
-public class ProductWindow extends AddNewDistributor {
+public class ProductWindow extends DistributorWindow {
 
     private static Label label2;
     private static Label label3;
@@ -77,8 +77,7 @@ public class ProductWindow extends AddNewDistributor {
         imageView.setImage(p.getPhoto());
         imageView.setFitHeight(150);
         imageView.setFitWidth(150);
-        imageView.setCache(true); //improve performance
-        
+        imageView.setCache(true); //improve performance       
         
 //        LineChart chart = new LineChart(, yAxis);
 //        topGrid.add
@@ -152,7 +151,7 @@ public class ProductWindow extends AddNewDistributor {
         bottomGrid.setVgap(8);
         bottomGrid.setHgap(10);
         
-        VBox vbox = new VBox(); //zmienic na ten gora dol prawo lewo
+        VBox vbox = new VBox();
         vbox.getChildren().addAll(imageView, grid, bottomGrid);
         vbox.setAlignment(Pos.CENTER);
 

@@ -12,14 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import static vodsystemfx.AddNewDistributor.applyButton;
-import static vodsystemfx.AddNewDistributor.label0;
+import static vodsystemfx.DistributorWindow.applyButton;
+import static vodsystemfx.DistributorWindow.label0;
 
 /**
  *
  * @author tomas
  */
-class SubscriptionWindow extends AddNewDistributor {
+class SubscriptionWindow extends DistributorWindow {
     
     public static boolean display(String title) {
         displayStandard(title, false);

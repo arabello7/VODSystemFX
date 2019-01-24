@@ -7,7 +7,6 @@ package vodsystemfx.classes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import vodsystemfx.VODSystemFX;
 
 /**
@@ -27,7 +26,6 @@ public class User implements Runnable {
     public void run() {
         //kupowanie produktu
         //ogladanie
-        //plac abonament co miesiac
     }
 
     public final void randomizeUser() {
@@ -52,29 +50,45 @@ public class User implements Runnable {
         randomizeUser();
     }
 
-    // losuje indeks na globalnej i kupuje
+    // **Tries to purchase random product from globalList, if the product is already owned tries more
     public void chooseProductToBuy() {
-        int globalIndex = Randomize.randomInt(0, VODSystemFX.getAllProducts().size());
-//        for (int i = 0; i < productList.size(); i++) {
-//            if (globalIndex == VOD)
-//        }
-//        if (VODSystemFX.getAllProducts().get(globalIndex).getSeasons() != null) {
-        buyProduct(globalIndex);
-//        }
-
+        int alreadyBought = -1;
+        while (alreadyBought != 0) {
+            int globalIndex = Randomize.randomInt(0, VODSystemFX.getAllProducts().size());
+            alreadyBought = 0;
+            for (int index : productList) {
+                if(index == globalIndex) alreadyBought++;
+            }
+            if (alreadyBought == 0) buyProduct(globalIndex);
+        }
     }
     
-    // ** User pays once a month if he chose to subscribe application
-    public void payForSubcription (){
-        VODSystemFX.payToSystem(VODSystemFX.getSubscriptionPrice(this.subscriptionType));
-    }
-
     //** User without subscription pays for single product. With subscription pays once a month
+    // Distributor gets his percent of price the rest goes to system account
     public void buyProduct(int globalIndex) {
         if ("none".equals(this.subscriptionType)) {
-            VODSystemFX.payToSystem(VODSystemFX.getAllProducts().get(globalIndex).getPrice());
+            double price = VODSystemFX.getAllProducts().get(globalIndex).getPrice();
+            double percForDistributor = VODSystemFX.getAllProducts().get(globalIndex).getDistributor().getSalary();
+            VODSystemFX.getAllProducts().get(globalIndex).getDistributor().getMoneyTransfer(price * percForDistributor);
+            VODSystemFX.payToSystem(price * (1 - percForDistributor));
         }
         productList.add(globalIndex);
+    }
+    
+    public void watchProduct() {
+        int choose = Randomize.randomInt(0, productList.size());
+        VODSystemFX.getAllProducts().get(choose); //.displayProduct();
+        //losuje produkt z wlasnej listy
+    }
+    
+//    // ** User pays once a month if he chose to subscribe application
+//    public void payForSubcription (){
+//        VODSystemFX.payToSystem(VODSystemFX.getSubscriptionPrice(this.subscriptionType));
+//    }
+//
+    
+    public String getSubscriptionType() {
+        return subscriptionType;
     }
 
     public List<Integer> getProductList() {
@@ -87,7 +101,7 @@ public class User implements Runnable {
     }
 
     //jeżeli będzie wolno dzialalo to sortowanie przy dodawani na liste
-    // ** Changes value of element on local list by -1
+    // ** Changes value of element on local list by -1. Used when deleting product from global list
     public void reduceProductIndex(int localIndex) {
         productList.set(localIndex, productList.get(localIndex) - 1);
     }

@@ -67,13 +67,14 @@ public class FXMLVODSystemController implements Initializable {
             productsObservableList.addAll(p.getTitle());
         }
         productsListView.setItems(productsObservableList);
+        searchTextField.setText("");
         System.out.println("Product list updated.");
     }
 
     // New Distributor Button
     public void handleDistributorClick() throws FileNotFoundException {
         Distributor d = new Distributor();
-        if (AddNewDistributor.display("New Distributor", d, false)) {
+        if (DistributorWindow.display("New Distributor", d, false)) {
             VODSystemFX.addToAllDistributors(d); // Dodawanie do globalnej listy
             System.out.println("Distributor added.");
             distListViewUpdate(); // Update listView
@@ -85,7 +86,7 @@ public class FXMLVODSystemController implements Initializable {
     public void handleDistributorListClick() {
         int selectedIndex = distListView.getSelectionModel().getSelectedIndex();
         try {
-            if (AddNewDistributor.display("Distributor info", VODSystemFX.getAllDistributors().get(selectedIndex), true)) {
+            if (DistributorWindow.display("Distributor info", VODSystemFX.getAllDistributors().get(selectedIndex), true)) {
                 VODSystemFX.removeDistributor(selectedIndex);
                 System.out.println("Distributor deleted!");
                 productListViewUpdate();
@@ -99,7 +100,7 @@ public class FXMLVODSystemController implements Initializable {
 
     public void handleUserClick() throws FileNotFoundException {
         User u = new User();
-        if (AddNewUser.display("New User", u, false) == true) {
+        if (UserWindow.display("New User", u, false) == true) {
             System.out.println("New user was added.");
             VODSystemFX.addToAllUsers(u); //dodawanie do globalnej listy
             userListViewUpdate(); // Update listView
@@ -109,7 +110,7 @@ public class FXMLVODSystemController implements Initializable {
     // Opens object info. Admin can delete object
     public void handleUserListClick() throws FileNotFoundException {
         int selectedIndex = userListView.getSelectionModel().getSelectedIndex();
-        if (AddNewUser.display("User info", VODSystemFX.getAllUsers().get(selectedIndex), true)) {
+        if (UserWindow.display("User info", VODSystemFX.getAllUsers().get(selectedIndex), true)) {
             VODSystemFX.removeUser(selectedIndex);
             System.out.println("User deleted!");
             userListViewUpdate();
@@ -118,7 +119,7 @@ public class FXMLVODSystemController implements Initializable {
 
     // Adding new project by button
     public void handleProductClick() throws FileNotFoundException {
-        AddNewProductChoose.display("New Product");
+        NewProductWindow.display("New Product");
         try {
             productListViewUpdate();
         } catch (Exception e) {

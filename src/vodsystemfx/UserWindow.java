@@ -11,15 +11,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import static vodsystemfx.AddNewDistributor.displayStandard;
-import static vodsystemfx.AddNewDistributor.window;
+import static vodsystemfx.DistributorWindow.displayStandard;
+import static vodsystemfx.DistributorWindow.window;
 import vodsystemfx.classes.User;
 
 /**
  *
  * @author tomas
  */
-public class AddNewUser extends AddNewDistributor {
+public class UserWindow extends DistributorWindow {
 
     private static Label label2;
     private static Label label3;

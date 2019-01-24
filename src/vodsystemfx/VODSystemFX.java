@@ -30,7 +30,32 @@ public class VODSystemFX extends Application {
     private Scene scene1, scene2;
     private static double systemAccountBalance = 0.0;
     private static double basicSubscriptionPrice = 10; // Subscriptions paid once a month by user
+    private static double familySubscriptionPrice = 20;
+    private static double premiumSubscriptionPrice = 50;
+    private static List<Distributor> allDistributors = new ArrayList<>();
+    private static List<User> allUsers = new ArrayList<>();
+    private static List<Product> allProducts = new ArrayList<>();
+    private static List<Movie> allMovies = new ArrayList<>();
 
+    // Collects money from subscriptions
+    public void monthlyVindication() {
+        for (User u : allUsers) {
+            systemAccountBalance += getSubscriptionPrice(u.getSubscriptionType());
+        }
+    }
+
+    public static double getSubscriptionPrice(String type) {
+        switch (type) {
+            case "basic":
+                return basicSubscriptionPrice;
+            case "family":
+                return familySubscriptionPrice;
+            case "premium":
+                return premiumSubscriptionPrice;
+        }
+        return 0;
+    }
+    
     public static void setBasicSubscriptionPrice(double newPrice) {
         VODSystemFX.basicSubscriptionPrice = newPrice;
     }
@@ -42,43 +67,11 @@ public class VODSystemFX extends Application {
     public static void setPremiumSubscriptionPrice(double newPrice) {
         VODSystemFX.premiumSubscriptionPrice = newPrice;
     }
-    
-    private static double familySubscriptionPrice = 20;
-    private static double premiumSubscriptionPrice = 50;
-    private static List<Distributor> allDistributors = new ArrayList<>();
-    private static List<User> allUsers = new ArrayList<>();
-    private static List<Product> allProducts = new ArrayList<>();
-    private static List<Movie> allMovies = new ArrayList<>();
-//    private static List<Product> allAll = collect(new ArrayList<Movie>(), new ArrayList<Series>());
 
-//    static List<Product> collect(List<? extends Product> a1, List<? extends Product> a2) {
-//        List<Product> collected = new ArrayList<>();
-//        collected.addAll(a1);
-//        return collected;
-//    }
-//    public static List<Movie> getAllMovies() {
-//        return allMovies;
-//    }
-//
-//    public void addToAllMovies(Movie m) {
-//        allMovies.add(m);
-//    }
-    public static double getSubscriptionPrice (String type) {
-        switch (type){
-            case "basic" :
-                return basicSubscriptionPrice;
-            case "family":
-                return familySubscriptionPrice;
-            case "premium":
-                return premiumSubscriptionPrice;
-        }
-        return -1;
-    }
-    
-    public static void payToSystem (double price) {
+    public static void payToSystem(double price) {
         systemAccountBalance += price;
     }
-    
+
     public static List<Product> getAllProducts() {
         return allProducts;
     }
@@ -88,7 +81,7 @@ public class VODSystemFX extends Application {
         allProducts.add(p);
         return allProducts.lastIndexOf(p);
     }
-    
+
 //    public static void test () {
 //        User u = new User();
 //        
@@ -108,7 +101,6 @@ public class VODSystemFX extends Application {
 //        
 //       
 //    }
-
     //** Used when deleting product. Method goes through all Users and deletes product index on their prrivate lists.
     // Note that privateList[0] is not the same as on globalList[0]
     // When deleting f.ex. globalList[4] all next objects's index drops by -1 so I do exacly same on private lists.
@@ -119,8 +111,11 @@ public class VODSystemFX extends Application {
         allProducts.remove(removeIndex);
         for (User u : allUsers) {
             for (int localIndex = 0; localIndex < u.getProductList().size(); localIndex++) {
-                if (u.getProductList().get(localIndex) > removeIndex) u.reduceProductIndex(localIndex);
-                else if (u.getProductList().get(localIndex) == removeIndex) u.removeProduct(localIndex);
+                if (u.getProductList().get(localIndex) > removeIndex) {
+                    u.reduceProductIndex(localIndex);
+                } else if (u.getProductList().get(localIndex) == removeIndex) {
+                    u.removeProduct(localIndex);
+                }
             }
         }
     }

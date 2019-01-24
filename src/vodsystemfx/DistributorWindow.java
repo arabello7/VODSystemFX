@@ -22,7 +22,7 @@ import vodsystemfx.classes.Product;
  *
  * @author tomas
  */
-public class AddNewDistributor {
+public class DistributorWindow {
     
     protected static Stage window; //
     protected static boolean answer;
@@ -124,7 +124,7 @@ public class AddNewDistributor {
         //Finance fields
         label1 = new Label("Finance:");
         GridPane.setConstraints(label1, 0, 1);
-        input1 = new TextField(String.valueOf(d.getFinance()));
+        input1 = new TextField(String.valueOf(d.getAccountBalance()));
         input1.setEditable(false);
         GridPane.setConstraints(input1, 1, 1);
         

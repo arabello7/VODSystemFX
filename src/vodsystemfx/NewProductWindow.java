@@ -23,7 +23,7 @@ import vodsystemfx.classes.Stream;
  *
  * @author tomas
  */
-public class AddNewProductChoose {
+public class NewProductWindow {
 
 //    public static boolean apply = false;
 //
@@ -32,7 +32,7 @@ public class AddNewProductChoose {
 //    }
 //
 //    public static void setApply(boolean apply) {
-//        AddNewProductChoose.apply = apply;
+//        NewProductWindow.apply = apply;
 //    }
 
     public void handleMovieClick() {
