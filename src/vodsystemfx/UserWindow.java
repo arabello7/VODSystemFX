@@ -26,7 +26,7 @@ public class UserWindow extends DistributorWindow {
     private static TextField input2;
     private static TextField input3;
 
-    public static boolean display(String title, User u, boolean ifEdit) throws FileNotFoundException {
+    public static boolean display(String title, User u, boolean ifEdit) {
         displayStandard(title, ifEdit);
         System.out.println("Using User method");
 

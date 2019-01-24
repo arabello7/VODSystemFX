@@ -16,4 +16,8 @@ public class Stream extends Product {
         super(d);
         streamingDate = 0; //RAND
     }
+    
+    public int getStreamingDate() {
+        return streamingDate;
+    }
 }

@@ -28,7 +28,7 @@ public class VODSystemFX extends Application {
 
     private static Stage window;
     private Scene scene1, scene2;
-    private static double systemAccountBalance = 0.0;
+    private static double systemAccountBalance = 1000.0;
     private static double basicSubscriptionPrice = 10; // Subscriptions paid once a month by user
     private static double familySubscriptionPrice = 20;
     private static double premiumSubscriptionPrice = 50;
@@ -74,6 +74,10 @@ public class VODSystemFX extends Application {
 
     public static List<Product> getAllProducts() {
         return allProducts;
+    }
+    
+    public static double getSystemAccountBalance() {
+        return Math.round(systemAccountBalance) * 100.0 / 100.0;
     }
 
     // Return index of added element

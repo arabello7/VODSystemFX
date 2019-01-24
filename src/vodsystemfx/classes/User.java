@@ -24,8 +24,16 @@ public class User implements Runnable {
 
     @Override
     public void run() {
-        //kupowanie produktu
-        //ogladanie
+        int choose = Randomize.randomInt(0, 1);
+        switch (choose) {
+            case 0:
+                chooseProductAndBuy();
+                break;
+            case 1:
+                watchProductAndVote();
+                break;
+                
+        }
     }
 
     public final void randomizeUser() {
@@ -33,14 +41,17 @@ public class User implements Runnable {
         this.birthDate = String.valueOf(Randomize.randomInt(1, 29)) + "." + String.valueOf(Randomize.randomInt(1, 12)) + "." + String.valueOf(Randomize.randomInt(1900, 2001));
         mail = code.substring(0, 8) + "@" + "mail.com";
         creditCard = String.valueOf((long) (Math.random() * 100000000000000L) + 5200000000000000L);
-        int choose = Randomize.randomInt(0, 2);
+        int choose = Randomize.randomInt(0, 3);
         switch (choose) {
             case 0:
                 this.subscriptionType = "basic";
+                break;
             case 1:
                 this.subscriptionType = "family";
+                break;
             case 2:
                 this.subscriptionType = "premium";
+                break;
             default:
                 this.subscriptionType = "none";
         }
@@ -51,7 +62,7 @@ public class User implements Runnable {
     }
 
     // **Tries to purchase random product from globalList, if the product is already owned tries more
-    public void chooseProductToBuy() {
+    public void chooseProductAndBuy() {
         int alreadyBought = -1;
         while (alreadyBought != 0) {
             int globalIndex = Randomize.randomInt(0, VODSystemFX.getAllProducts().size());
@@ -63,22 +74,28 @@ public class User implements Runnable {
         }
     }
     
-    //** User without subscription pays for single product. With subscription pays once a month
-    // Distributor gets his percent of price the rest goes to system account
+    //** User without subscription pays for single product. With subscription pays once a month so not here
+    // User pays for stream no matter if he has subscription
+    // Depending on type of agreement Distributor gets his percentage of price or monthly salary so not here
     public void buyProduct(int globalIndex) {
-        if ("none".equals(this.subscriptionType)) {
-            double price = VODSystemFX.getAllProducts().get(globalIndex).getPrice();
-            double percForDistributor = VODSystemFX.getAllProducts().get(globalIndex).getDistributor().getSalary();
-            VODSystemFX.getAllProducts().get(globalIndex).getDistributor().getMoneyTransfer(price * percForDistributor);
-            VODSystemFX.payToSystem(price * (1 - percForDistributor));
+        Product p = VODSystemFX.getAllProducts().get(globalIndex);
+        if ("none".equals(this.subscriptionType) || p.getStreamingPeriod() != -1) {
+            double price = p.getPrice();
+            if ("ProductPricing".equals(p.getDistributor().getAgreementType())) {
+                double percForDistributor = p.getDistributor().getSalary();
+                p.getDistributor().getMoneyTransfer(price * percForDistributor);
+                VODSystemFX.payToSystem(price * (1 - percForDistributor));
+            } else {
+                VODSystemFX.payToSystem(price);
+            }
         }
         productList.add(globalIndex);
     }
     
-    public void watchProduct() {
+    public void watchProductAndVote() {
         int choose = Randomize.randomInt(0, productList.size());
-        VODSystemFX.getAllProducts().get(choose); //.displayProduct();
-        //losuje produkt z wlasnej listy
+        VODSystemFX.getAllProducts().get(choose).displayProduct();
+        VODSystemFX.getAllProducts().get(choose).addVote(Randomize.randomInt(5, 10));
     }
     
 //    // ** User pays once a month if he chose to subscribe application

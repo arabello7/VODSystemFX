@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Movie;
+import vodsystemfx.classes.Randomize;
 import vodsystemfx.classes.Series;
 import vodsystemfx.classes.Stream;
 
@@ -71,51 +72,28 @@ public class NewProductWindow {
         GridPane.setConstraints(freeSpace, 0, 4);
         GridPane.setConstraints(backBtn, 0, 5);
 
+        Distributor d = VODSystemFX.getAllDistributors().get(Randomize.randomInt(0, VODSystemFX.getAllDistributors().size() - 1));   
+
         seriesBtn.setOnAction(e -> {
-            try {
-                Distributor d = VODSystemFX.getOneDistributor(0); //losowy
-                Series s = new Series(d); 
-                if (ProductWindow.display("New Series", s, false) == true) {
-//                    d.addProduct(s);
-                    d.addProduct(VODSystemFX.addToAllProducts(s));
-//                    d.addProduct(VODSystemFX.getAllProducts().lastIndexOf(s)); //czy ten last index dobrze dziala?
-                    System.out.println("Series accepted.");
-                }
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
-            } catch (IndexOutOfBoundsException ex) {
-                System.out.println("First create Distributor");
+            Series s = new Series(d); 
+            if (ProductWindow.display("New Series", s, false) == true) {
+                d.addProduct(VODSystemFX.addToAllProducts(s));
+                System.out.println("Series accepted.");
             }
         });
 
         movieBtn.setOnAction(e -> {
-            try {
-                Distributor d = VODSystemFX.getOneDistributor(0); //losowy
-                Movie m = new Movie(d); //warunek, ze jest Dystrybutor!
-                if (ProductWindow.display("New Movie", m, false) == true) {
-                    d.addProduct(VODSystemFX.addToAllProducts(m));
-                    System.out.println("Movie accepted.");
-                }
-
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Not Found"); //trzeba wtedy w tamtych tez obslugiwać?
-            } catch (IndexOutOfBoundsException ex) {
-                System.out.println("First create Distributor");
+            Movie m = new Movie(d);
+            if (ProductWindow.display("New Movie", m, false) == true) {
+                d.addProduct(VODSystemFX.addToAllProducts(m));
+                System.out.println("Movie accepted.");
             }
         });
 
         streamBtn.setOnAction(e -> {
-            try {
-                Distributor d = VODSystemFX.getOneDistributor(0);
-                Stream st = new Stream(d);
-                if (ProductWindow.display("New Stream", st, false)) {
-                    VODSystemFX.addToAllProducts(st);
-                }
-//                d.addProduct(st);
-            } catch (FileNotFoundException ex) {
-                System.out.println("File Not Found!"); //trzeba wtedy w tamtych tez obslugiwać?
-            } catch (IndexOutOfBoundsException ex) {
-                System.out.println("First create Distributor!");
+            Stream st = new Stream(d);
+            if (ProductWindow.display("New Stream", st, false)) {
+                VODSystemFX.addToAllProducts(st);
             }
         });
 

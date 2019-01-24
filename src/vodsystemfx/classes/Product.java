@@ -23,7 +23,8 @@ public class Product {
     protected Distributor distributor; //Losuj z dostepnych
     protected String[] prodCountries = new String[2]; //ma to sens?
     protected String[] actors = new String[3];
-    protected double usersRating; //Na poczatku zero, potem sie zmienia, ludzie losowo glosuja
+    protected double votesNumber = 0;
+    protected double votesSum = 0;
     protected final int COUNTRIESSIZE = 199; // Countries in text file
     protected final int TITLESIZE = 16;
     protected final int ACTORSSIZE = 188;
@@ -63,7 +64,6 @@ public class Product {
     public Product(Distributor d) {
         randomizeProduct();
         this.distributor = d;
-        usersRating = 0.0;
     }
     
     // When user watches product
@@ -73,6 +73,11 @@ public class Product {
 
     public Image getPhoto() {
         return photo;
+    }
+    
+    public void addVote(double vote){
+        this.votesSum += vote;
+        this.votesNumber += 1;
     }
 
 
@@ -133,11 +138,8 @@ public class Product {
     }
 
     public double getUsersRating() {
-        return usersRating;
-    }
-
-    public void setUsersRating(double usersRating) {
-        this.usersRating = usersRating;
+        if (votesNumber == 0) return 0.0;
+        else return votesSum / votesNumber;
     }
 
     // *Poniższe metody zastosowałem, aby móc odwołać się do pól np. filmu po pobraniu go z listy produktów
@@ -154,6 +156,10 @@ public class Product {
     //@overridable Series
     public List<Season> getSeasons() {
         return null;
+    }
+    
+    public int getStreamingPeriod(){
+        return -1;
     }
 
 }

@@ -40,7 +40,7 @@ public class Distributor implements Runnable {
 
     @Override
     public void run() {
-        while (true) { //warunek przeładowania dystrybutorów
+        while (true) {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException ex) {
@@ -50,21 +50,25 @@ public class Distributor implements Runnable {
             int i = Randomize.randomInt(0, 4);
             switch (i) {
                 case 0:
-//                //negocjuj cene randomowego produktu z listy
-                case 1:
+                    negotiateAgreement();
+                    break;
+                case 1: 
                     Movie m = new Movie(this);
                     addProduct(VODSystemFX.addToAllProducts(m));
                     System.out.println(this.getName() + " added new movie.");
+                    break;
                 case 2:
                     Series s = new Series(this);
                     addProduct(VODSystemFX.addToAllProducts(s));
                     System.out.println(this.getName() + " added new series.");
+                    break;
                 case 3:
                     Stream st = new Stream(this);
                     addProduct(VODSystemFX.addToAllProducts(st));
                     System.out.println(this.getName() + " added new stream.");
+                    break;
                 default:
-                    System.out.println(this.getName() + " is doing nothing at all.");
+                    System.out.println(this.getName() + " is doing nothing.");
             }
         }
     }
@@ -102,6 +106,7 @@ public class Distributor implements Runnable {
     // Raise percentage of incomes by 1.05
     public void negotiateAgreement() {
         salary *= 1.05;
+        System.out.println(this.getName() + " finished negotiations.");
     }
 
     public void addProduct(int globalIndex) {
@@ -111,6 +116,10 @@ public class Distributor implements Runnable {
     //
     public void removeProduct(int index) {
         productList.remove(index);
+    }
+
+    public String getAgreementType() {
+        return agreementType;
     }
 
     public void setDiscount() {

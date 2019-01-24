@@ -68,7 +68,7 @@ public class ProductWindow extends DistributorWindow {
         input7.setVisible(false);
     }
 
-    public static boolean display(String title, Product p, boolean ifEdit) throws FileNotFoundException {
+    public static boolean display(String title, Product p, boolean ifEdit) {
         displayStandard(title, ifEdit);
         
 //        GridPane topGrid = new GridPane();
@@ -123,8 +123,15 @@ public class ProductWindow extends DistributorWindow {
         TextField input5 = new TextField(String.valueOf(p.getProdCountries()[0] + ", " + p.getProdCountries()[1]));
         input5.setEditable(false);
         GridPane.setConstraints(input5, 1, 5);
+        
+        //Actors fields
+        Label label8 = new Label("Actors:");
+        GridPane.setConstraints(label8, 0, 6);
+        TextField input8 = new TextField(p.getActors()[0] + ", " + p.getActors()[1] + ", " + p.getActors()[2]);
+        input8.setEditable(false);
+        GridPane.setConstraints(input8, 1, 6);
 
-        grid.getChildren().addAll(label0, input0, label1, input1, label2, input2, label3, input3, input4, label4, label5, input5);
+        grid.getChildren().addAll(label0, input0, label1, input1, label2, input2, label3, input3, input4, label4, label5, input5, label8, input8);
         grid.setAlignment(Pos.CENTER);
 
         // Displaying bottom grid depending on object class
