@@ -20,6 +20,7 @@ public class Distributor implements Runnable {
     private List<Integer> productList = new ArrayList<>();
     private String name;
     private double finance;
+    private double percFromSales;
     private final int FILESIZE = 16; //input file for randomizer
 
     public Distributor() {
@@ -74,12 +75,18 @@ public class Distributor implements Runnable {
         return finance;
     }
 
-    public void makeAgreement() {
+    // Raise percentage of incomes from product sales by 1.05
+    // jeśli nie abonament...
+    public void negotiateAgreement() {
+//        VODSystemFX.getAllProducts().get(Randomize.randomInt(0, productList.size())).setPercFromSales(1.05);
+        //jezeli abonament == null to to wyzej, else podnosi abonament
     }
-//
-//    public void addMovie(Movie m) {
-////        productList.add(m);
-//    }
+    
+    public void setPercFromSales(double percent) {
+        if ((this.percFromSales * percent) <= 1.0) {
+            this.percFromSales *= percent;
+        }
+    }
 
     public void addProduct(int globalIndex) {
         productList.add(globalIndex);

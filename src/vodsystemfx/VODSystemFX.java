@@ -28,7 +28,23 @@ public class VODSystemFX extends Application {
 
     private static Stage window;
     private Scene scene1, scene2;
-    //public int DistributorsTotal = X zapewne
+    private static double systemAccountBalance = 0.0;
+    private static double basicSubscriptionPrice = 10; // Subscriptions paid once a month by user
+
+    public static void setBasicSubscriptionPrice(double newPrice) {
+        VODSystemFX.basicSubscriptionPrice = newPrice;
+    }
+
+    public static void setFamilySubscriptionPrice(double newPrice) {
+        VODSystemFX.familySubscriptionPrice = newPrice;
+    }
+
+    public static void setPremiumSubscriptionPrice(double newPrice) {
+        VODSystemFX.premiumSubscriptionPrice = newPrice;
+    }
+    
+    private static double familySubscriptionPrice = 20;
+    private static double premiumSubscriptionPrice = 50;
     private static List<Distributor> allDistributors = new ArrayList<>();
     private static List<User> allUsers = new ArrayList<>();
     private static List<Product> allProducts = new ArrayList<>();
@@ -47,6 +63,22 @@ public class VODSystemFX extends Application {
 //    public void addToAllMovies(Movie m) {
 //        allMovies.add(m);
 //    }
+    public static double getSubscriptionPrice (String type) {
+        switch (type){
+            case "basic" :
+                return basicSubscriptionPrice;
+            case "family":
+                return familySubscriptionPrice;
+            case "premium":
+                return premiumSubscriptionPrice;
+        }
+        return -1;
+    }
+    
+    public static void payToSystem (double price) {
+        systemAccountBalance += price;
+    }
+    
     public static List<Product> getAllProducts() {
         return allProducts;
     }

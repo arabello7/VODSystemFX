@@ -89,8 +89,8 @@ public class AddNewDistributor {
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL); // Focus on that window
         window.setTitle(title);
-        window.setMinWidth(400);
-        window.setMinHeight(450);
+//        window.setMinWidth(400);
+//        window.setMinHeight(450);
 
         grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
@@ -111,7 +111,7 @@ public class AddNewDistributor {
         });
     }
 
-    public static boolean display(String title, Distributor d, boolean ifEdit) throws FileNotFoundException {
+    public static boolean display(String title, Distributor d, boolean ifEdit) {
         displayStandard(title, ifEdit);
          
         //Name fields

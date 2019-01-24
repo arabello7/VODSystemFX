@@ -36,6 +36,9 @@ public class ProductWindow extends AddNewDistributor {
 
     // Only for Movies
     private static void movieBottom(Product m) {
+        //Genre fields
+        //...
+        
         //Trailer fields
         label6 = new Label("Trailer url:");
         input6 = new TextField(m.getTrailerUrl());
@@ -72,8 +75,8 @@ public class ProductWindow extends AddNewDistributor {
         //Image field
         ImageView imageView = new ImageView();
         imageView.setImage(p.getPhoto());
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(150);
+        imageView.setFitWidth(150);
         imageView.setCache(true); //improve performance
         
         
@@ -153,7 +156,7 @@ public class ProductWindow extends AddNewDistributor {
         vbox.getChildren().addAll(imageView, grid, bottomGrid);
         vbox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(vbox, 500, 500); //resolution
+        Scene scene = new Scene(vbox, 450, 550); //resolution
         window.setScene(scene);
         window.showAndWait();
         return answer;

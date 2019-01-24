@@ -158,6 +158,10 @@ public class FXMLVODSystemController implements Initializable {
         System.out.println("Searching finished.");
     }
 
+    public void handleSubscriptionButtonClick() {
+        SubscriptionWindow.display("Subscription Pricing");
+    }
+
     // When closing program
     public void handleExitClick() {
         saveProgram();

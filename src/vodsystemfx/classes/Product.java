@@ -8,6 +8,7 @@ package vodsystemfx.classes;
 import java.util.List;
 import java.util.Random;
 import javafx.scene.image.Image;
+import vodsystemfx.VODSystemFX;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Product {
     protected Image photo;
     protected String title;
     protected double price;
-    protected String description; // Moze lorem ipsum
+    protected String description;
     protected String productionDate;
     protected int duration;
     protected Distributor distributor; //Losuj z dostepnych
@@ -27,11 +28,11 @@ public class Product {
     protected double usersRating; //Na poczatku zero, potem sie zmienia, ludzie losowo glosuja
     protected final int COUNTRIESSIZE = 199; // Countries in text file
     protected final int TITLESIZE = 16;
-    protected final int ACTORSSIZE = 188;//do sprawdzenia
+    protected final int ACTORSSIZE = 188;
 
     public void randomizeProduct() {
         try {
-            photo = new Image("images/cage2.jpg"); //cage+randomint
+            photo = new Image("file:" + "images/cage" + Randomize.randomInt(0, 13) + ".jpeg");
         } catch (IllegalArgumentException e) {
             System.out.println("Photo not found!");
         }
@@ -52,11 +53,11 @@ public class Product {
         productionDate = Integer.toString(Randomize.randomInt(1, 28)) + ".";
         productionDate += Integer.toString(Randomize.randomInt(1, 12)) + ".";
         productionDate += Integer.toString(Randomize.randomInt(1900, 2019));
-        
+
         duration = Randomize.randomInt(40, 240);
-        
+
         //Generating actors
-        actors[0] = "Nicolas Cage"; 
+        actors[0] = "Nicolas Cage";
         actors[1] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
         actors[2] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
     }
@@ -70,6 +71,7 @@ public class Product {
     public Image getPhoto() {
         return photo;
     }
+
 
     public String getTitle() {
         return title;
@@ -136,18 +138,19 @@ public class Product {
     }
 
     // *Poniższe metody zastosowałem, aby móc odwołać się do pól np. filmu po pobraniu go z listy produktów
-    //@overridable
+    //@overridable Movie
     public String getTrailerUrl() {
         return null;
     }
-    //@overridable
+
+    //@overridable Movie
     public int getViewingPeriod() {
         return -1;
     }
-    //@overridable
+
+    //@overridable Series
     public List<Season> getSeasons() {
         return null;
     }
-    
 
 }
