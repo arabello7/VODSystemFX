@@ -5,7 +5,6 @@
  */
 package vodsystemfx;
 
-import java.io.FileNotFoundException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -17,7 +16,7 @@ import vodsystemfx.classes.User;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class UserWindow extends DistributorWindow {
 

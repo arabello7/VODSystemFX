@@ -6,35 +6,45 @@
 package vodsystemfx.classes;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
-public class Series extends Product {
+public final class Series extends Product {
 
-    private List<Season> seasons = new ArrayList<>();
+    private final List<Season> seasons;
+    private final GregorianCalendar releaseDate = new GregorianCalendar();
 
     public Series(Distributor dist) {
         super(dist);
-        System.out.println("generating seasons...");
+        this.seasons = new ArrayList<>();
+        if (Time.getMonth() <= 7) {
+            this.releaseDate.set(Time.getYear(), Time.getMonth() + 5, Time.getDay());
+        } else {
+            this.releaseDate.set(Time.getYear() + 1, Time.getMonth() - 7, Time.getDay());
+        }
         generateSeasons(); 
     }
 
     private void generateSeasons() {
-        System.out.println("Season s = new ...");
-        Season s = new Season(this.distributor); // Fresh new product
-        System.out.println("inherit data...");
-        s.inheritSeriesData(this); // Product gets needed data from its Series
-        System.out.println("adding to list");
-        seasons.add(s);
+        for (int i = 1; i < 6; i++) {
+            Season s = new Season(this.distributor); // Fresh new product
+            s.inheritSeriesData(this, i); // Product (season) gets needed data from its Series
+            seasons.add(s);
+        }
+    }
+
+    // Returns true when Series is realeased. From this time Users can watch it
+    @Override
+    public boolean isReleased() {
+        return Time.getMonth() > releaseDate.get(Calendar.MONTH) || (Time.getMonth() == releaseDate.get(Calendar.MONTH) && Time.getDay() >= releaseDate.get(Calendar.DAY_OF_MONTH));      
     }
     
-//    public void addSeason (Season se) {
-//        seasons.add(se);
-//    }
-    
+    @Override
     public List<Season> getSeasons(){
         return seasons;
     }

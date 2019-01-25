@@ -7,7 +7,6 @@ package vodsystemfx;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -17,18 +16,18 @@ import static vodsystemfx.DistributorWindow.label0;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 class SubscriptionWindow extends DistributorWindow {
     
     public static boolean display(String title) {
         displayStandard(title, false);
         
-        GridPane grid = new GridPane();
-        grid.getColumnConstraints().add(0, new ColumnConstraints(150)); // column 0 is 100 wide
-        grid.getColumnConstraints().add(1, new ColumnConstraints(100)); // column 0 is 100 wide
-        grid.getColumnConstraints().add(2, new ColumnConstraints(100)); // column 0 is 100 wide
-        grid.getColumnConstraints().add(3, new ColumnConstraints(100)); // column 0 is 100 wide
+        GridPane mainGrid = new GridPane();
+        mainGrid.getColumnConstraints().add(0, new ColumnConstraints(150)); // column 0 is 150 wide
+        mainGrid.getColumnConstraints().add(1, new ColumnConstraints(100)); // column 1 is 100 wide
+        mainGrid.getColumnConstraints().add(2, new ColumnConstraints(100)); // column 2 is 100 wide
+        mainGrid.getColumnConstraints().add(3, new ColumnConstraints(100)); // column 3 is 100 wide
         
         // Subscription names
         label0 = new Label("Basic:");
@@ -72,7 +71,7 @@ class SubscriptionWindow extends DistributorWindow {
         GridPane.setConstraints(cancelButton, 1, 4);
         GridPane.setConstraints(applyButton, 2, 4);
         
-//        applyButton = new Button("Apply");
+        // Updating prices of subscriptions
         applyButton.setOnAction(e -> {
             try {
                 VODSystemFX.setBasicSubscriptionPrice(Double.valueOf(textField0.getText()));
@@ -84,13 +83,13 @@ class SubscriptionWindow extends DistributorWindow {
             }
         });
 
-        grid.getChildren().addAll(label0, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11, textField0, textField1, textField2, cancelButton, applyButton);
-        grid.setAlignment(Pos.CENTER);
-        grid.setVgap(8);
-        grid.setHgap(10);
+        mainGrid.getChildren().addAll(label0, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11, textField0, textField1, textField2, cancelButton, applyButton);
+        mainGrid.setAlignment(Pos.CENTER);
+        mainGrid.setVgap(8);
+        mainGrid.setHgap(10);
         
 
-        Scene scene = new Scene(grid, 500, 200); //resolution widthxheigh
+        Scene scene = new Scene(mainGrid, 500, 200); //resolution widthxheigh
         window.setScene(scene);
         window.showAndWait();
         return answer;

@@ -13,11 +13,11 @@ import vodsystemfx.VODSystemFX;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class Stream extends Product implements Runnable {
 
-    private GregorianCalendar streamingDate = new GregorianCalendar();
+    private final GregorianCalendar streamingDate = new GregorianCalendar();
     private static volatile boolean stopWork;
     private int globalIndex;
 
@@ -51,7 +51,7 @@ public class Stream extends Product implements Runnable {
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Stream.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch (IndexOutOfBoundsException ex) {}
         }
     }
 

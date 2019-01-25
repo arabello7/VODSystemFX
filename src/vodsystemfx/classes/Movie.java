@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class Movie extends Product /*implements Promotion*/ { //interfejs
 

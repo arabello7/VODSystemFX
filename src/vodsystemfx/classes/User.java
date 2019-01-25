@@ -13,7 +13,7 @@ import vodsystemfx.VODSystemFX;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class User implements Runnable {
 
@@ -21,27 +21,38 @@ public class User implements Runnable {
     private String birthDate;
     private String mail;
     private String creditCard;
-    private List<Integer> productList = new ArrayList<>();
+    private final List<Integer> productList = new ArrayList<>();
     private String subscriptionType;
+    private static volatile boolean stopWork;
+
+    public User() {
+        randomizeUser();
+    }
+    
+    public void stopWork() {
+        stopWork = true;
+    }
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(10000);
-            int choose = Randomize.randomInt(0, 2);
-            switch (choose) {
-                case 0:
-                    chooseProductAndBuy();
-                    break;
-                case 1:
-                    watchProductAndVote();
-                    break;
-                case 2:
-                    watchProductAndVote();
-                    break;
+        while(!stopWork) {
+            try {
+                Thread.sleep(10000);
+                int choose = Randomize.randomInt(0, 2);
+                switch (choose) {
+                    case 0:
+                        chooseProductAndBuy();
+                        break;
+                    case 1:
+                        watchProductAndVote();
+                        break;
+                    case 2:
+                        watchProductAndVote();
+                        break;
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -64,10 +75,6 @@ public class User implements Runnable {
             default:
                 this.subscriptionType = "none";
         }
-    }
-
-    public User() {
-        randomizeUser();
     }
 
     // **Tries to purchase random product from globalList, if the product is already owned tries more
@@ -102,25 +109,19 @@ public class User implements Runnable {
         System.out.println(this.getCode() + " purchased " + p.getTitle());
     }
     
+    //** Users choose random product from private list and:
+    // a) Watched and votes for movie or released series
+    // b) When series is not released yet or it's stream - skips
     public void watchProductAndVote() {
         int choose = Randomize.randomInt(0, productList.size());
-        VODSystemFX.getAllProducts().get(choose).displayProduct();
-        System.out.println(this.code + " watched " + VODSystemFX.getAllProducts().get(choose).getTitle() + " and voted.");
-        VODSystemFX.getAllProducts().get(choose).addVote(Randomize.randomInt(5, 10));
-    }
-    
-//    // ** User pays once a month if he chose to subscribe application
-//    public void payForSubcription (){
-//        VODSystemFX.payToSystem(VODSystemFX.getSubscriptionPrice(this.subscriptionType));
-//    }
-//
-    
-    public String getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public List<Integer> getProductList() {
-        return productList;
+        Product p = VODSystemFX.getAllProducts().get(choose);
+        if (!p.isReleased() || p.getStreamingDate() != null) {
+            System.out.println(this.code + " can't wait to watch " + p.getTitle());
+        } else {
+            p.displayProduct();
+            p.addVote(Randomize.randomInt(5, 10));
+            System.out.println(this.code + " watched " + p.getTitle() + " and voted.");
+        }
     }
 
     // Deletes element on local list using local index
@@ -128,12 +129,20 @@ public class User implements Runnable {
         productList.remove(localIndex);
     }
 
-    //jeżeli będzie wolno dzialalo to sortowanie przy dodawani na liste
     // ** Changes value of element on local list by -1. Used when deleting product from global list
+    //* For better performacne sorting can be added here.
     public void reduceProductIndex(int localIndex) {
         productList.set(localIndex, productList.get(localIndex) - 1);
     }
 
+    public String getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public List<Integer> getProductList() {
+        return productList;
+    }
+    
     public String getCode() {
         return code;
     }

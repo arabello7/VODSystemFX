@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public abstract class Randomize {
     

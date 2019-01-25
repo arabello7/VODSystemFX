@@ -10,30 +10,31 @@ import java.util.List;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
-public class Season extends Product {
-    private List<Episode> episodesList = new ArrayList<>();
-    private int releaseDate;
 
-    // Troche nie optymalne bo losuje nowe pola a potem zmienia od razu, ale nie moglem tego obejść
-    public void inheritSeriesData(Series s){
-        this.title = s.title;
-        this.price = s.price / 4.0; //zaokraglenie poprawic
+// Te klase chcialem bardziej rozbudowac ale zabraklo czasu
+public class Season extends Product {
+    private final List<Episode> episodesList;
+
+    // **Season gets similiar data as it's series
+    // It's a bit not optimal generating new data and then changes for Series's but I counldn't make it around
+    public void inheritSeriesData(Series s, int number){
+        this.title = s.title + " s" + number;
+        this.price = s.price / 4.0; // round
         this.duration = s.duration / 5;
         this.prodCountries = s.prodCountries;
         this.productionDate = s.productionDate;
         this.actors = s.actors;
-        this.releaseDate = 999; //do poprawy z czasem
     }
-            
+
     public Season(Distributor d) {
         super(d);
+        this.episodesList = new ArrayList<>();
         generateEpisodes();
     }
     
     private void generateEpisodes() {
-        //losuj liczbe 5-10, dla iproszczenia daje tearz 10, moze zmienie
         for (int i = 1; i < 11; i++) {
             Episode e = new Episode(i, this.duration / 10);
             episodesList.add(e);

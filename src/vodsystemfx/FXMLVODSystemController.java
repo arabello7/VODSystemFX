@@ -6,9 +6,8 @@
 package vodsystemfx;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -19,8 +18,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import vodsystemfx.classes.Daemon;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Product;
@@ -29,7 +30,7 @@ import vodsystemfx.classes.User;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class FXMLVODSystemController implements Initializable {
 
@@ -179,8 +180,20 @@ public class FXMLVODSystemController implements Initializable {
     public void saveProgram() {
         //Serializacja
         System.out.println("Status saved.");
+        Daemon.stopAllThreads();
         VODSystemFX.saveProgram();
-        Daemon.stopWork();
+    }
+    
+    public static void playDramaticMusic() {
+        try {
+            File file = new File("music/i-just-died-short.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(file));
+            clip.start();
+        }
+        catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+            System.out.println("Sound not working!");
+        }
     }
 
     // Handling Refresh Button
@@ -201,12 +214,5 @@ public class FXMLVODSystemController implements Initializable {
         executor.submit(daemon);
         Time time = new Time(2005, 1, 1);
         executor.submit(time);
-        try {
-            InputStream music = new FileInputStream(new File("file:music/take-on-me.wav"));
-            AudioStream audios = new AudioStream(music);
-            AudioPlayer.player.start();
-        } catch (Exception e) {
-            System.out.println("No sound!");
-        }
     }
 }

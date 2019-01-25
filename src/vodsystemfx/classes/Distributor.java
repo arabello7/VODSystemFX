@@ -13,7 +13,7 @@ import vodsystemfx.VODSystemFX;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class Distributor implements Runnable {
 
@@ -24,6 +24,12 @@ public class Distributor implements Runnable {
     private double salary; // % of purchase price or amount of money depending on agreementType
     private final int FILESIZE = 16; //input file for randomizer
     private int[] nameControl = new int[FILESIZE];
+    private static volatile boolean stopWork;
+    private boolean haveDiscount;
+
+    public void stopWork() {
+        stopWork = true;
+    }
 
     //** If all names from file are in use returns null
     //* else returns random name
@@ -67,14 +73,14 @@ public class Distributor implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!stopWork) {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Distributor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            int i = Randomize.randomInt(0, 6);
+            int i = Randomize.randomInt(0, 5);
             switch (i) {
                 case 0:
                     negotiateAgreement();
@@ -94,8 +100,27 @@ public class Distributor implements Runnable {
                     addProduct(VODSystemFX.addToAllProducts(st));
                     System.out.println(this.getName() + " added new stream.");
                     break;
+                case 4:
+                    setDiscount();
+                    System.out.println(this.getName() + " changed products prices.");
                 default:
                     System.out.println(this.getName() + " is doing nothing.");
+            }
+        }
+    }
+
+    // Changing price of products. Distributor lowers prices but next time raises and so on.
+    public void setDiscount() {
+        double percent = 0.95 + Math.random() * (0.95 - 0.5);
+        if (haveDiscount) {
+            for (int i = 0; i < productList.size(); i++) {
+                VODSystemFX.getAllProducts().get(i).changePrice(1 / percent);
+                haveDiscount = false;
+            }
+        } else {
+            for (int i = 0; i < productList.size(); i++) {
+                VODSystemFX.getAllProducts().get(i).changePrice(percent);
+                haveDiscount = true;
             }
         }
     }
@@ -147,10 +172,5 @@ public class Distributor implements Runnable {
 
     public String getAgreementType() {
         return agreementType;
-    }
-
-    public void setDiscount() {
-        // tylko dla Streama i Filmu
-        // tu nie wiem czy Dystrybutor nie powinien implementować Promotion?
     }
 }

@@ -11,10 +11,16 @@ import java.io.IOException;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public abstract class FileWorm {
 
+    /** Method is used for getting data from different files. Useful when generating random names for objects.
+     * 
+     * @param line means line inside text file
+     * @param fileName name of text file
+     * @return single line from text file
+     */
     public static String readFile(int line, String fileName) {
         BufferedReader reader;
         String text = "";

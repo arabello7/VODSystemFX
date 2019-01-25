@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import vodsystemfx.classes.Product;
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class ProductWindow extends DistributorWindow {
 

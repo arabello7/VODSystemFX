@@ -21,7 +21,7 @@ import vodsystemfx.classes.Stream;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class NewProductWindow {
 

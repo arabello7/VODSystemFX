@@ -6,12 +6,11 @@
 package vodsystemfx.classes;
 
 import java.util.List;
-import java.util.Random;
 import javafx.scene.image.Image;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class Product {
 
@@ -21,19 +20,23 @@ public class Product {
     protected String description;
     protected String productionDate;
     protected int duration;
-    protected Distributor distributor; //Losuj z dostepnych
-    protected String[] prodCountries = new String[2]; //ma to sens?
+    protected Distributor distributor;
+    protected String[] prodCountries = new String[2];
     protected String[] actors = new String[3];
     protected double votesNumber = 0;
     protected double votesSum = 0;
     protected int[] monthlyViews = new int[13];
     protected final int COUNTRIESSIZE = 199; // Countries in text file
-    protected final int TITLESIZE = 16;
-    protected final int ACTORSSIZE = 188;
+    protected final int TITLESIZE = 16; // Product titles in 3 files
+    protected final int ACTORSSIZE = 188; // Actors' names
 
+    /** Generating Product data
+     */
     public void randomizeProduct() {
+        
+        //Generating photo
         try {
-            photo = new Image("file:" + "images/cage" + Randomize.randomInt(0, 13) + ".jpeg");
+            photo = new Image("file:" + "images/cage" + Randomize.randomInt(0, 13) + ".jpeg"); // random photo of the applicatino sponsor 
         } catch (IllegalArgumentException e) {
             System.out.println("Photo not found!");
         }
@@ -43,8 +46,7 @@ public class Product {
         title += FileWorm.readFile(Randomize.randomInt(0, TITLESIZE), "title2.txt") + " ";
         title += FileWorm.readFile(Randomize.randomInt(0, TITLESIZE), "title3.txt");
 
-        Random rand = new Random(); //jak wiecej razy to metoda w Randomize
-        price = Math.round(rand.nextDouble() * 20 * 100.0) / 100.0;
+        price = Math.round(Math.random() * 20 * 100.0) / 100.0;
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper malesuada semper. Donec vestibulum ipsum non est aliquam dictum. Quisque."; // albo uniwersalna historia na podstawie wylosowanych pol
 
         //Generating countries
@@ -73,26 +75,41 @@ public class Product {
         this.distributor = d;
     }
 
-    // When user watches product
+    /** Watching product by user generates view in the current month
+     */
     public void displayProduct() {
         monthlyViews[Time.getMonth()]++;
     }
 
+    /** Users are voting after watching the product
+     * @param vote - random digit from 5 to 10
+     */
+    public void addVote(double vote) {
+        this.votesSum += vote;
+        this.votesNumber += 1;
+    }
+    
+    /** Method is calculating users votes. I had to add 2 variables to manage this
+     * @return calculated users rating or 0 if they haven't voted yet
+     */
+    public double getUsersRating() {
+        if (votesNumber == 0) {
+            return 0.0;
+        } else {
+            return Math.round(votesSum / votesNumber) * 100.0 / 100.0;
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+      
     public int getMonthlyViews(int month) {
         return monthlyViews[month];
     }
 
     public Image getPhoto() {
         return photo;
-    }
-
-    public void addVote(double vote) {
-        this.votesSum += vote;
-        this.votesNumber += 1;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public void setName(String title) {
@@ -146,16 +163,14 @@ public class Product {
     public void setProdCountries(String[] prodCountries) {
         this.prodCountries = prodCountries;
     }
-
-    public double getUsersRating() {
-        if (votesNumber == 0) {
-            return 0.0;
-        } else {
-            return votesSum / votesNumber;
-        }
+    
+    public void changePrice(double percent) {
+        this.price *= percent;
     }
 
-    // *Poniższe metody zastosowałem, aby móc odwołać się do pól np. filmu po pobraniu go z listy produktów
+    // Methods below were created so I can call all objects fields after getting f.ex. movie from all products list. 
+    // I use them also to distinguish obejcts classes
+    
     //@overridable Movie
     public String getTrailerUrl() {
         return null;
@@ -176,9 +191,9 @@ public class Product {
         return null;
     }
     
-//    //@overridable Stream
-//    public int getGlobalIndex() {
-//        return -1;
-//    }
+    //@overridable Series
+    public boolean isReleased() {
+        return true;
+    }
 
 }

@@ -5,8 +5,6 @@
  */
 package vodsystemfx;
 
-import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -15,28 +13,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import vodsystemfx.classes.Distributor;
-import vodsystemfx.classes.Movie;
 import vodsystemfx.classes.Product;
-import vodsystemfx.classes.Series;
 import vodsystemfx.classes.User;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class VODSystemFX extends Application {
 
     private static Stage window;
-    private Scene scene1, scene2;
     private static double systemAccountBalance = 1000.0;
-    private static double basicSubscriptionPrice = 10; // Subscriptions paid once a month by user
+    private static double basicSubscriptionPrice = 10; // Value paid once a month by user
     private static double familySubscriptionPrice = 20;
     private static double premiumSubscriptionPrice = 50;
-    private static List<Distributor> allDistributors = new ArrayList<>();
-    private static List<User> allUsers = new ArrayList<>();
-    private static List<Product> allProducts = new ArrayList<>();
+    private static final List<Distributor> allDistributors = new ArrayList<>();
+    private static final List<User> allUsers = new ArrayList<>();
+    private static final List<Product> allProducts = new ArrayList<>();
 
-    // Collects money from subscriptions and paying distributors with Monthly Pricing agreement
+    /** Collects money from user's subscriptions and paying distributors who chose to have Monthly Pricing type of agreement
+     * 
+     * @return monthly incomes - expenses
+     */
     public static double monthlySettlement() {
         double cashFlow = 0;
         for (User u : allUsers) {
@@ -53,6 +51,11 @@ public class VODSystemFX extends Application {
         return cashFlow;
     }
 
+    /** Subscriptions pricing can be changes by admin
+     * 
+     * @param type - type of subscription user chooses when creating account
+     * @return - 0 means not having subscription - user pays for each product
+     */
     public static double getSubscriptionPrice(String type) {
         switch (type) {
             case "basic":
@@ -63,6 +66,80 @@ public class VODSystemFX extends Application {
                 return premiumSubscriptionPrice;
         }
         return 0;
+    }
+
+    /** Adding product to 'global list'
+     * 
+     * @param p - product
+     * @return - index of product on global list. Used for adding product to private lists
+     */
+    public static int addToAllProducts(Product p) {
+        allProducts.add(p);
+        return allProducts.lastIndexOf(p);
+    }
+
+    /** Used when deleting product. Method goes through all Users and deletes product index on their prrivate lists.
+    * Note that privateList[0] is not the same as on globalList[0]
+    * When deleting f.ex. globalList[4] all next objects's index drops by -1 so I do exacly same on private lists.
+    * @param removeIndex - index of product to remove from allProducts list
+    */
+    public static void removeProduct(int removeIndex) {
+        allProducts.remove(removeIndex);
+        for (User u : allUsers) {
+            for (int localIndex = 0; localIndex < u.getProductList().size(); localIndex++) {
+                if (u.getProductList().get(localIndex) > removeIndex) {
+                    u.reduceProductIndex(localIndex);
+                } else if (u.getProductList().get(localIndex) == removeIndex) {
+                    u.removeProduct(localIndex);
+                }
+            }
+        }
+    }
+
+    /** Used when deleting distributor. Removing distributor also removes all it's products
+     * @param index - index of product on allProducts list
+    */
+    public static void removeDistributor(int index) {
+        for (int globalIndex : getOneDistributor(index).getProductList()) {
+            removeProduct(globalIndex);
+        }
+        allDistributors.remove(index);
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args); //invocates application start method
+    }
+
+    // Launching application window
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        window = stage;
+
+        window.setTitle("VOD System");
+
+        window.setOnCloseRequest(e -> {
+            e.consume(); //canceling prevoius action
+            saveProgram();
+        });
+        
+        Scene scene = new Scene(root);
+
+        window.setScene(scene);
+        window.show();
+    }
+
+    public static void saveProgram() {
+        System.out.println("Saving program state...");
+        // here I can put "are you sure?" alert method
+        window.close();
+    }
+    
+    public static void addToAllDistributors(Distributor d) {
+        allDistributors.add(d);
     }
     
     public static void setBasicSubscriptionPrice(double newPrice) {
@@ -88,45 +165,7 @@ public class VODSystemFX extends Application {
     public static double getSystemAccountBalance() {
         return Math.round(systemAccountBalance) * 100.0 / 100.0;
     }
-
-    // Return index of added element
-    public static int addToAllProducts(Product p) {
-        allProducts.add(p);
-        return allProducts.lastIndexOf(p);
-    }
-
-    //** Used when deleting product. Method goes through all Users and deletes product index on their prrivate lists.
-    // Note that privateList[0] is not the same as on globalList[0]
-    // When deleting f.ex. globalList[4] all next objects's index drops by -1 so I do exacly same on private lists.
-    //@globalIndex - index of product on allProducts list
-    //@removeIndex - index of product to remove from allProducts list
-    //@localIndex - index on user's private list
-    public static void removeProduct(int removeIndex) {
-        allProducts.remove(removeIndex);
-        for (User u : allUsers) {
-            for (int localIndex = 0; localIndex < u.getProductList().size(); localIndex++) {
-                if (u.getProductList().get(localIndex) > removeIndex) {
-                    u.reduceProductIndex(localIndex);
-                } else if (u.getProductList().get(localIndex) == removeIndex) {
-                    u.removeProduct(localIndex);
-                }
-            }
-        }
-    }
-
-    public static void addToAllDistributors(Distributor d) {
-        allDistributors.add(d);
-    }
-
-    // ** Used when deleting distributor. Removing distributor also remove all its products
-    // @global index - index of product on allProducts list
-    public static void removeDistributor(int index) {
-        for (int globalIndex : getOneDistributor(index).getProductList()) {
-            removeProduct(globalIndex);
-        }
-        allDistributors.remove(index);
-    }
-
+    
     public static List<Distributor> getAllDistributors() {
         return allDistributors;
     }
@@ -145,40 +184,5 @@ public class VODSystemFX extends Application {
 
     public static void removeUser(int index) {
         allUsers.remove(index);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {//throws FileNotFoundException {
-        launch(args); //launching application start method
-    }
-
-    // Uruchomienie okna aplikacji
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        window = stage;
-
-        window.setTitle("VOD System");
-
-        window.setOnCloseRequest(e -> {
-            e.consume(); //canceling prevoius action
-            saveProgram();
-        });
-        // Zawartość okna wczytywana z pliku .fxml
-        Scene scene = new Scene(root); // rozmiar okna można dać
-
-//        Button button = new Button("Go to 2nd scene");
-//        button1.setOnAction(e -> window.setScene(scene2)); przełączanie pomiędzy oknami
-        window.setScene(scene);
-        window.show();
-    }
-
-    //Jakoś, żeby tego nie powielać muszę z jednego pliku korzystać
-    public static void saveProgram() {
-        System.out.println("Saving program state...");
-        // here I can put "are you sure?" alert method
-        window.close();
     }
 }

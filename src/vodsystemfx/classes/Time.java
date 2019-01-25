@@ -10,27 +10,32 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import vodsystemfx.FXMLVODSystemController;
 import vodsystemfx.VODSystemFX;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
 public class Time implements Runnable {
 
     private static GregorianCalendar calendar;
     private static volatile boolean stopWork;
 
+    public Time(int year, int month, int day) {
+        calendar = new GregorianCalendar(year, month, day);
+    }
+    
     public static void stopWork() {
         stopWork = true;
     }
-    
 
     @Override
     public void run() {
-        int checkSum = 0; // 3 means that system is not profitable for 3 months 
-        double cashFlow = 0;
+        int checkSum = 0; // For checking profitability of the system 
+        double cashFlow;
         while (!stopWork) {
+            // One month
             for (int day = 0; day < 30; day++) {
                 try {
                     Thread.sleep(500); //one day passes
@@ -39,38 +44,43 @@ public class Time implements Runnable {
                     Logger.getLogger(Time.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            // Displaying system info
             System.out.println("[Current date:" + calendar.get(Calendar.YEAR) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.DAY_OF_MONTH) + "]");
             System.out.println("[System starts the monthly settlement]");
             cashFlow = VODSystemFX.monthlySettlement();
             System.out.println("[System cash flow in month: " + cashFlow + "]");
-            if (cashFlow < 0) checkSum++;
-            else checkSum = 0;
             
+            // Saving profitability
+            if (cashFlow < 0) {
+                checkSum++;
+            } else {
+                checkSum = 0;
+            }
+
+            // System is not profitable for 3 months still. Simulation ends.
             if (checkSum == 3) {
-                stopWork = true;
+                System.out.println("[System is not profitable!]");
+                stopWork = true; //Suicide
+                FXMLVODSystemController.playDramaticMusic(); //Worth it!
+                Daemon.stopAllThreads();
                 VODSystemFX.saveProgram();
             }
         }
-    }
-    
-    public Time(int year, int month, int day) {
-        calendar = new GregorianCalendar(year, month, day);
     }
 
     public static int getDay() {
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
-    
+
     public static int getMonth() {
         return calendar.get(Calendar.MONTH);
     }
-    
+
     public static int getYear() {
         return calendar.get(Calendar.YEAR);
     }
-    
+
     public static Date getTime() {
         return calendar.getTime();
     }
-
 }

@@ -7,19 +7,16 @@ package vodsystemfx.classes;
 
 /**
  *
- * @author tomas
+ * @author Tomasz Jurek
  */
+
+// Ta klasa powinna być bardziej rozbudowana... Postanowiłem zastąpić jej użyteczność Serialem
 public class Episode {
 
-    private int number; //albo title 
-    private int duration;
-//    private int releaseDate;
-
-    public void randomizeReleaseDate(){
-//        
-    }
+    private final int number; 
+    private final int duration;
     
-    public Episode(int number, int duration) { //rel Date jedna dla sezonu, w zasadzie do klasy sezon dodac
+    public Episode(int number, int duration) {
         this.number = number;
         this.duration = duration;
     }
