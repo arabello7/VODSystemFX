@@ -7,6 +7,8 @@ package vodsystemfx.classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vodsystemfx.VODSystemFX;
 
 /**
@@ -24,15 +26,22 @@ public class User implements Runnable {
 
     @Override
     public void run() {
-        int choose = Randomize.randomInt(0, 1);
-        switch (choose) {
-            case 0:
-                chooseProductAndBuy();
-                break;
-            case 1:
-                watchProductAndVote();
-                break;
-                
+        try {
+            Thread.sleep(10000);
+            int choose = Randomize.randomInt(0, 2);
+            switch (choose) {
+                case 0:
+                    chooseProductAndBuy();
+                    break;
+                case 1:
+                    watchProductAndVote();
+                    break;
+                case 2:
+                    watchProductAndVote();
+                    break;
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -41,7 +50,7 @@ public class User implements Runnable {
         this.birthDate = String.valueOf(Randomize.randomInt(1, 29)) + "." + String.valueOf(Randomize.randomInt(1, 12)) + "." + String.valueOf(Randomize.randomInt(1900, 2001));
         mail = code.substring(0, 8) + "@" + "mail.com";
         creditCard = String.valueOf((long) (Math.random() * 100000000000000L) + 5200000000000000L);
-        int choose = Randomize.randomInt(0, 3);
+        int choose = Randomize.randomInt(0, 5);
         switch (choose) {
             case 0:
                 this.subscriptionType = "basic";
@@ -79,7 +88,7 @@ public class User implements Runnable {
     // Depending on type of agreement Distributor gets his percentage of price or monthly salary so not here
     public void buyProduct(int globalIndex) {
         Product p = VODSystemFX.getAllProducts().get(globalIndex);
-        if ("none".equals(this.subscriptionType) || p.getStreamingPeriod() != -1) {
+        if ("none".equals(this.subscriptionType) || p.getStreamingDate() != null) {
             double price = p.getPrice();
             if ("ProductPricing".equals(p.getDistributor().getAgreementType())) {
                 double percForDistributor = p.getDistributor().getSalary();
@@ -90,11 +99,13 @@ public class User implements Runnable {
             }
         }
         productList.add(globalIndex);
+        System.out.println(this.getCode() + " purchased " + p.getTitle());
     }
     
     public void watchProductAndVote() {
         int choose = Randomize.randomInt(0, productList.size());
         VODSystemFX.getAllProducts().get(choose).displayProduct();
+        System.out.println(this.code + " watched " + VODSystemFX.getAllProducts().get(choose).getTitle() + " and voted.");
         VODSystemFX.getAllProducts().get(choose).addVote(Randomize.randomInt(5, 10));
     }
     

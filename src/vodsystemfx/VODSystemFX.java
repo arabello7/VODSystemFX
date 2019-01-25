@@ -35,13 +35,22 @@ public class VODSystemFX extends Application {
     private static List<Distributor> allDistributors = new ArrayList<>();
     private static List<User> allUsers = new ArrayList<>();
     private static List<Product> allProducts = new ArrayList<>();
-    private static List<Movie> allMovies = new ArrayList<>();
 
-    // Collects money from subscriptions
-    public void monthlyVindication() {
+    // Collects money from subscriptions and paying distributors with Monthly Pricing agreement
+    public static double monthlySettlement() {
+        double cashFlow = 0;
         for (User u : allUsers) {
             systemAccountBalance += getSubscriptionPrice(u.getSubscriptionType());
+            cashFlow += getSubscriptionPrice(u.getSubscriptionType());
         }
+        for (Distributor d : allDistributors) {
+            if("MontlyPricing".equals(d.getAgreementType())) {
+                d.getMoneyTransfer(d.getSalary());
+                systemAccountBalance -= d.getSalary();
+                cashFlow -= d.getSalary();
+            }
+        }
+        return cashFlow;
     }
 
     public static double getSubscriptionPrice(String type) {
@@ -86,25 +95,6 @@ public class VODSystemFX extends Application {
         return allProducts.lastIndexOf(p);
     }
 
-//    public static void test () {
-//        User u = new User();
-//        
-//        u.buySingleProduct(0); //musi byc produkt juz stworzony
-//        u.buySingleProduct(1); //musi byc produkt juz stworzony
-//        System.out.println("Product 0 bought");
-////        removeProduct(0);
-////        System.out.println("Prod 0 deleted");
-//        System.out.println( VODSystemFX.getAllProducts().get(u.getProductList().get(0)).getTitle() + "- pierwszy produkt na liscie");
-//             removeProduct(0);
-//        System.out.println("Prod 0 deleted");
-//        try{
-//            System.out.println( VODSystemFX.getAllProducts().get(u.getProductList().get(0)).getTitle() + "- pierwszy produkt na liscie");
-//        } catch (Exception ex) {
-//            System.out.println("Error. List empty");
-//        }
-//        
-//       
-//    }
     //** Used when deleting product. Method goes through all Users and deletes product index on their prrivate lists.
     // Note that privateList[0] is not the same as on globalList[0]
     // When deleting f.ex. globalList[4] all next objects's index drops by -1 so I do exacly same on private lists.

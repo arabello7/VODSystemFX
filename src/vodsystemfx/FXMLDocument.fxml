@@ -48,7 +48,7 @@
             <VBox prefHeight="355.0" prefWidth="181.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" textAlignment="CENTER" wrappingWidth="201.28515625" />
-                  <ListView fx:id="productsListView" onMouseClicked="#handleProductListClick" onMouseEntered="#updateListViews" prefHeight="334.0" prefWidth="217.0" />
+                  <ListView fx:id="productsListView" onMouseClicked="#handleProductListClick" prefHeight="334.0" prefWidth="217.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="355.0" prefWidth="191.0">
@@ -89,11 +89,17 @@
                   </TextField>
                   <Button mnemonicParsing="false" onAction="#handleSubscriptionButtonClick" prefHeight="31.0" prefWidth="155.0" text="Subscription Pricing" />
                </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
          </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </HBox>
    </left>
    <top>

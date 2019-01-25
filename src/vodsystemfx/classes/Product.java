@@ -8,6 +8,7 @@ package vodsystemfx.classes;
 import java.util.List;
 import java.util.Random;
 import javafx.scene.image.Image;
+
 /**
  *
  * @author tomas
@@ -25,6 +26,7 @@ public class Product {
     protected String[] actors = new String[3];
     protected double votesNumber = 0;
     protected double votesSum = 0;
+    protected int[] monthlyViews = new int[13];
     protected final int COUNTRIESSIZE = 199; // Countries in text file
     protected final int TITLESIZE = 16;
     protected final int ACTORSSIZE = 188;
@@ -59,27 +61,35 @@ public class Product {
         actors[0] = "Nicolas Cage";
         actors[1] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
         actors[2] = FileWorm.readFile(Randomize.randomInt(0, ACTORSSIZE), "actors.txt");
+
+        //Monthly views
+        for (int i = 0; i < 13; i++) {
+            monthlyViews[i] = 0;
+        }
     }
 
     public Product(Distributor d) {
         randomizeProduct();
         this.distributor = d;
     }
-    
+
     // When user watches product
     public void displayProduct() {
-        //bierze aktualny czas(miesiąc) i dopisuje +1
+        monthlyViews[Time.getMonth()]++;
+    }
+
+    public int getMonthlyViews(int month) {
+        return monthlyViews[month];
     }
 
     public Image getPhoto() {
         return photo;
     }
-    
-    public void addVote(double vote){
+
+    public void addVote(double vote) {
         this.votesSum += vote;
         this.votesNumber += 1;
     }
-
 
     public String getTitle() {
         return title;
@@ -138,8 +148,11 @@ public class Product {
     }
 
     public double getUsersRating() {
-        if (votesNumber == 0) return 0.0;
-        else return votesSum / votesNumber;
+        if (votesNumber == 0) {
+            return 0.0;
+        } else {
+            return votesSum / votesNumber;
+        }
     }
 
     // *Poniższe metody zastosowałem, aby móc odwołać się do pól np. filmu po pobraniu go z listy produktów
@@ -157,9 +170,15 @@ public class Product {
     public List<Season> getSeasons() {
         return null;
     }
-    
-    public int getStreamingPeriod(){
-        return -1;
+
+    //@overridable Stream
+    public String getStreamingDate() {
+        return null;
     }
+    
+//    //@overridable Stream
+//    public int getGlobalIndex() {
+//        return -1;
+//    }
 
 }

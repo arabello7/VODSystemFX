@@ -5,7 +5,10 @@
  */
 package vodsystemfx;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -16,16 +19,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import vodsystemfx.classes.Daemon;
 import vodsystemfx.classes.Distributor;
 import vodsystemfx.classes.Product;
+import vodsystemfx.classes.Time;
 import vodsystemfx.classes.User;
 
 /**
  *
  * @author tomas
  */
-
 public class FXMLVODSystemController implements Initializable {
 
     @FXML
@@ -39,7 +44,6 @@ public class FXMLVODSystemController implements Initializable {
     private static ObservableList productsObservableList = FXCollections.observableArrayList();
     private ExecutorService executor = Executors.newCachedThreadPool(); // For managing many threads
 
-    
     public void distListViewUpdate() {
         distListView.getItems().clear();
         if (!VODSystemFX.getAllDistributors().isEmpty()) {
@@ -71,9 +75,11 @@ public class FXMLVODSystemController implements Initializable {
     }
 
     // New Distributor Button
-    public void handleDistributorClick() throws FileNotFoundException {
+    public void handleDistributorClick() {
         Distributor d = new Distributor();
-        if (DistributorWindow.display("New Distributor", d, false)) {
+        if (d.getName() == null) {
+            System.out.println("Limit of distributors reached!");
+        } else if (DistributorWindow.display("New Distributor", d, false)) {
             VODSystemFX.addToAllDistributors(d); // Dodawanie do globalnej listy
             System.out.println("Distributor added.");
             executor.submit(d);
@@ -101,6 +107,7 @@ public class FXMLVODSystemController implements Initializable {
         if (UserWindow.display("New User", u, false) == true) {
             System.out.println("New user was added.");
             VODSystemFX.addToAllUsers(u); //dodawanie do globalnej listy
+            executor.submit(u);
         }
         updateListViews();
     }
@@ -125,7 +132,7 @@ public class FXMLVODSystemController implements Initializable {
             NewProductWindow.display("New Product");
             updateListViews();
         } catch (IllegalArgumentException ex) {
-                System.out.println("First create Distributor!");
+            System.out.println("First create Distributor!");
         }
     }
 
@@ -170,8 +177,10 @@ public class FXMLVODSystemController implements Initializable {
 
     // Executing when closing program
     public void saveProgram() {
+        //Serializacja
         System.out.println("Status saved.");
         VODSystemFX.saveProgram();
+        Daemon.stopWork();
     }
 
     // Handling Refresh Button
@@ -185,10 +194,19 @@ public class FXMLVODSystemController implements Initializable {
         searchTextField.setText("");
         systemAccountBalance.setText(String.valueOf(VODSystemFX.getSystemAccountBalance()));
     }
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Daemon daemon = new Daemon();
         executor.submit(daemon);
+        Time time = new Time(2005, 1, 1);
+        executor.submit(time);
+        try {
+            InputStream music = new FileInputStream(new File("file:music/take-on-me.wav"));
+            AudioStream audios = new AudioStream(music);
+            AudioPlayer.player.start();
+        } catch (Exception e) {
+            System.out.println("No sound!");
+        }
     }
 }

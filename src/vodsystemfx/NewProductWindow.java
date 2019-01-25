@@ -5,7 +5,6 @@
  */
 package vodsystemfx;
 
-import java.io.FileNotFoundException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,20 +24,6 @@ import vodsystemfx.classes.Stream;
  * @author tomas
  */
 public class NewProductWindow {
-
-//    public static boolean apply = false;
-//
-//    public static boolean isApply() {
-//        return apply;
-//    }
-//
-//    public static void setApply(boolean apply) {
-//        NewProductWindow.apply = apply;
-//    }
-
-    public void handleMovieClick() {
-//        boolean bool = AddNewMovie.display("New Movie");
-    }
 
     public static void display(String title) {
         Stage window = new Stage();
@@ -72,10 +57,10 @@ public class NewProductWindow {
         GridPane.setConstraints(freeSpace, 0, 4);
         GridPane.setConstraints(backBtn, 0, 5);
 
-        Distributor d = VODSystemFX.getAllDistributors().get(Randomize.randomInt(0, VODSystemFX.getAllDistributors().size() - 1));   
+        Distributor d = VODSystemFX.getAllDistributors().get(Randomize.randomInt(0, VODSystemFX.getAllDistributors().size() - 1));
 
         seriesBtn.setOnAction(e -> {
-            Series s = new Series(d); 
+            Series s = new Series(d);
             if (ProductWindow.display("New Series", s, false) == true) {
                 d.addProduct(VODSystemFX.addToAllProducts(s));
                 System.out.println("Series accepted.");
@@ -92,11 +77,12 @@ public class NewProductWindow {
 
         streamBtn.setOnAction(e -> {
             Stream st = new Stream(d);
-            if (ProductWindow.display("New Stream", st, false)) {
-                VODSystemFX.addToAllProducts(st);
+            if (ProductWindow.display("New Stream", st, false) == true) {
+                int index = VODSystemFX.addToAllProducts(st);
+                d.addProduct(index);
+                st.setGlobalIndex(index); //So stream can delete itself
             }
         });
-
         backBtn.setOnAction(e -> window.close());
 
         grid.setAlignment(Pos.CENTER);

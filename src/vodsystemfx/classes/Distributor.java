@@ -23,9 +23,36 @@ public class Distributor implements Runnable {
     private String agreementType; // Monthly salary or for each product purchase
     private double salary; // % of purchase price or amount of money depending on agreementType
     private final int FILESIZE = 16; //input file for randomizer
+    private int[] nameControl = new int[FILESIZE];
+
+    //** If all names from file are in use returns null
+    //* else returns random name
+    public String getNewName() {
+        String name = null;
+        int check = 0;
+        for (int i = 0; i < FILESIZE; i++) {
+            if (nameControl[i] == 0) {
+                check++;
+            }
+        }
+        if (check == 0) {
+            name = null;
+        } else {
+            check = 0;
+            while (check == 0) {
+                int randomName = Randomize.randomInt(0, FILESIZE);
+                if (nameControl[randomName] == 0) {
+                    check = 1;
+                    nameControl[randomName] = 1;
+                    name = FileWorm.readFile(randomName, "distributors.txt");
+                }
+            }
+        }
+        return name;
+    }
 
     public Distributor() {
-        this.name = FileWorm.readFile(Randomize.randomInt(0, FILESIZE), "distributors.txt");
+        this.name = getNewName();
         this.accountBalance = Math.round(Math.random() * 2000000 + 25000 * 100.0) / 100.0;
         int choose = Randomize.randomInt(0, 1);
         switch (choose) {
@@ -47,12 +74,12 @@ public class Distributor implements Runnable {
                 Logger.getLogger(Distributor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            int i = Randomize.randomInt(0, 4);
+            int i = Randomize.randomInt(0, 6);
             switch (i) {
                 case 0:
                     negotiateAgreement();
                     break;
-                case 1: 
+                case 1:
                     Movie m = new Movie(this);
                     addProduct(VODSystemFX.addToAllProducts(m));
                     System.out.println(this.getName() + " added new movie.");

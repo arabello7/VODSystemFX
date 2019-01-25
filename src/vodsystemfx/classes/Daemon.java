@@ -5,6 +5,10 @@
  */
 package vodsystemfx.classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -18,12 +22,17 @@ import vodsystemfx.VODSystemFX;
 public class Daemon implements Runnable {
 
     private final ExecutorService executor = Executors.newCachedThreadPool(); // For managing many threads
+    private static volatile boolean stopWork;
 
+    public static void stopWork() {
+        stopWork = true;
+    }
+    
     public void run() {
-        while (true) {
+        while (!stopWork) {
 //            if (VODSystemFX.getAllUsers().size() * 2 < VODSystemFX.getAllProducts().size()) {
                 try {
-                    Thread.sleep(50000);
+                    Thread.sleep(10000);
                     User u = new User();
                     VODSystemFX.addToAllUsers(u);
                     System.out.println("New User created account.");
