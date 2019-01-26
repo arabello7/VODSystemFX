@@ -9,10 +9,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vodsystemfx.VODSystemFX;
 
 /**
- *
+ * Class is responsible for managing threads: creating new for users and safely stoping dsitributors and users. 
  * @author Tomasz Jurek
  */
 public class Daemon implements Runnable {
@@ -24,13 +23,13 @@ public class Daemon implements Runnable {
         stopWork = true;
     }
     
-    /** Method is used for safely stoping threads of all users and distributors.
+    /** Method is used for safely stoping threads of all users and distributors. Stream threads goes for 1 month and commit suicindes
      */
     public static void stopAllThreads() {
-        VODSystemFX.getAllDistributors().forEach((d) -> {
+        SystemManager.getAllDistributors().forEach((d) -> {
             d.stopWork();
         });
-        VODSystemFX.getAllUsers().forEach((u) -> {
+        SystemManager.getAllUsers().forEach((u) -> {
             u.stopWork();
         });
         System.out.println("[Simulation is ending]");
@@ -45,7 +44,7 @@ public class Daemon implements Runnable {
             try {
                 Thread.sleep(5000);
                 User u = new User();
-                VODSystemFX.addToAllUsers(u);
+                SystemManager.addToAllUsers(u);
                 System.out.println("New User created account.");
                 executor.submit(u);
             } catch (InterruptedException ex) {

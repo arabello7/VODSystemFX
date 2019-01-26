@@ -5,7 +5,7 @@
  */
 package vodsystemfx.classes;
 
-/**
+/** Episodes are part of seasons
  *
  * @author Tomasz Jurek
  */

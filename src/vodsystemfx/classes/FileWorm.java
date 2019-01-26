@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-/**
+/** This class is used to avoid code duplication, because reading from file is often used in application.
  *
  * @author Tomasz Jurek
  */

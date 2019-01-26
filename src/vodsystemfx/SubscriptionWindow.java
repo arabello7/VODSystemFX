@@ -13,8 +13,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import static vodsystemfx.DistributorWindow.applyButton;
 import static vodsystemfx.DistributorWindow.label0;
+import vodsystemfx.classes.SystemManager;
 
-/**
+/** Displays window used for changing Subscription pricing in application
  *
  * @author Tomasz Jurek
  */
@@ -40,11 +41,11 @@ class SubscriptionWindow extends DistributorWindow {
         // Subscription price
         Label label3 = new Label("Monthly Price[$]:");
         GridPane.setConstraints(label3, 0, 1);
-        TextField textField0 = new TextField(String.valueOf(VODSystemFX.getSubscriptionPrice("basic")));
+        TextField textField0 = new TextField(String.valueOf(SystemManager.getSubscriptionPrice("basic")));
         GridPane.setConstraints(textField0, 1, 1);
-        TextField textField1 = new TextField(String.valueOf(VODSystemFX.getSubscriptionPrice("family")));
+        TextField textField1 = new TextField(String.valueOf(SystemManager.getSubscriptionPrice("family")));
         GridPane.setConstraints(textField1, 2, 1);
-        TextField textField2 = new TextField(String.valueOf(VODSystemFX.getSubscriptionPrice("premium")));
+        TextField textField2 = new TextField(String.valueOf(SystemManager.getSubscriptionPrice("premium")));
         GridPane.setConstraints(textField2, 3, 1);
         
         // Number of devices
@@ -74,9 +75,9 @@ class SubscriptionWindow extends DistributorWindow {
         // Updating prices of subscriptions
         applyButton.setOnAction(e -> {
             try {
-                VODSystemFX.setBasicSubscriptionPrice(Double.valueOf(textField0.getText()));
-                VODSystemFX.setFamilySubscriptionPrice(Double.valueOf(textField1.getText()));
-                VODSystemFX.setPremiumSubscriptionPrice(Double.valueOf(textField2.getText()));
+                SystemManager.setBasicSubscriptionPrice(Double.valueOf(textField0.getText()));
+                SystemManager.setFamilySubscriptionPrice(Double.valueOf(textField1.getText()));
+                SystemManager.setPremiumSubscriptionPrice(Double.valueOf(textField2.getText()));
                 window.close();
             } catch (NumberFormatException ex) {
                 System.out.println("Wrong type! Values not updated.");

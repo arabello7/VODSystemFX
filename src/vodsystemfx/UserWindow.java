@@ -14,7 +14,7 @@ import static vodsystemfx.DistributorWindow.displayStandard;
 import static vodsystemfx.DistributorWindow.window;
 import vodsystemfx.classes.User;
 
-/**
+/** Displays window used for creation and edition of users in application
  *
  * @author Tomasz Jurek
  */

@@ -5,27 +5,16 @@
  */
 package vodsystemfx.classes;
 
-import java.security.SecureRandom;
-
-/**
+/** Movie is kind of product that can be purchased any time but user has 3 months to watch it as much as he wants 
+ * before it is removed from user's list. It's extended by url of trailer. Check it out!
  *
  * @author Tomasz Jurek
  */
-public class Movie extends Product /*implements Promotion*/ { //interfejs
+public class Movie extends Product {
 
     private String trailerUrl;
-    private int viewingPeriod; //how long you can view after buying
-    private String genre;
-    private enum Genre {
-        action, dramma, comedy, forKids, documentary, sensational
-    }
-    private static final SecureRandom random = new SecureRandom();
-    
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
-        int x = random.nextInt(clazz.getEnumConstants().length);
-        return clazz.getEnumConstants()[x];
-    }
 
+    @Override
     public String getTrailerUrl() {
         return trailerUrl;
     }
@@ -34,36 +23,10 @@ public class Movie extends Product /*implements Promotion*/ { //interfejs
         this.trailerUrl = trailerUrl;
     }
 
-    public int getViewingPeriod() {
-        return viewingPeriod;
-    }
-
-    public void setViewingPeriod(int viewingPeriod) {
-        this.viewingPeriod = viewingPeriod;
-    }
-
-    public Movie(Distributor dist) {
-        super(dist);
+    public Movie() {
+        super();
         this.trailerUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-//        randomEnum(Genre.class); //nie wiem co z tym
-        this.viewingPeriod = 0; //random
     }
     
-/*
-    @Override
-    public void setStartDate(int date) {
-//        startDate = date;
-    }
-
-    @Override
-    public void setFinishDate(int date) {
-       // jakoś musi to działać, że po upływie tego czasu setDiscount (0)
-    }
-
-    @Override
-    public void setDiscount(int discount) {
-        // jakaś informacja, że jest "DISCOUNT " + discount + "%"
-        this.price = price - price * discount;
-    }
-*/
+    
 }

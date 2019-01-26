@@ -17,7 +17,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import vodsystemfx.classes.Product;
-/**
+
+/** Displays window with details of product.
  *
  * @author Tomasz Jurek
  */
@@ -34,21 +35,20 @@ public class ProductWindow extends DistributorWindow {
     private static TextField input6;
     private static TextField input7;
 
-    // Only for Movies
+    /** Only for movie
+     */
     private static void movieBottom(Product m) {
-        //Genre fields
-        //...
-        
         //Trailer fields
         label6 = new Label("Trailer url:");
         input6 = new TextField(m.getTrailerUrl());
 
         //Viewing Period fields
         label7 = new Label("Viewing Period:         ");
-        input7 = new TextField(String.valueOf(m.getViewingPeriod()));
+        input7 = new TextField(String.valueOf("3 months"));
     }
 
-    // Only for Series
+    /** Only for series
+     */
     private static void seriesBottom(Product s) {
         //Seasons fields
         label6 = new Label("Number of seasons:");
@@ -59,7 +59,8 @@ public class ProductWindow extends DistributorWindow {
         input7 = new TextField("10?");
     }
 
-    // Only for Stream
+    /** Only for stream
+     */
     private static void streamBottom(Product st) {
         label6 = new Label("Streaming Date:          ");
         input6 = new TextField(st.getStreamingDate());
@@ -189,7 +190,8 @@ public class ProductWindow extends DistributorWindow {
         return answer;
     }
     
-    // When opening product for editing
+    /** When opening product for editing
+     */
     public void drawEditableFields() {
         GridPane rightGrid = new GridPane();
         

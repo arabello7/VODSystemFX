@@ -5,19 +5,19 @@
  */
 package vodsystemfx.classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vodsystemfx.VODSystemFX;
 
-/**
+/** Users are objects that automaticaly appear in system. They can buy products, watch them and vote.
  *
  * @author Tomasz Jurek
  */
-public class User implements Runnable {
+public class User implements Runnable, Serializable {
 
-    private String code; //must be also id and name?
+    private String code;
     private String birthDate;
     private String mail;
     private String creditCard;
@@ -28,16 +28,16 @@ public class User implements Runnable {
     public User() {
         randomizeUser();
     }
-    
+
     public void stopWork() {
         stopWork = true;
     }
 
     @Override
     public void run() {
-        while(!stopWork) {
+        while (!stopWork) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(2000);
                 int choose = Randomize.randomInt(0, 2);
                 switch (choose) {
                     case 0:
@@ -56,6 +56,16 @@ public class User implements Runnable {
         }
     }
 
+    public void checkMoviesFinish() {
+        while (!stopWork) {
+
+        }
+    }
+
+    /** User gets random code, credit card and date of birth. User gets subsciption type. Depending on type user pays different price
+     * for using application monthly and gets different utilities. After this user gets unlimited access to products.
+     * Option 'none' means not having subscription and paying to purchase each product 
+     */
     public final void randomizeUser() {
         code = Long.toHexString(Double.doubleToLongBits(Math.random()) / 1000);
         this.birthDate = String.valueOf(Randomize.randomInt(1, 29)) + "." + String.valueOf(Randomize.randomInt(1, 12)) + "." + String.valueOf(Randomize.randomInt(1900, 2001));
@@ -77,44 +87,52 @@ public class User implements Runnable {
         }
     }
 
-    // **Tries to purchase random product from globalList, if the product is already owned tries more
+    /** Tries to purchase random product from globalList, if the product is already owned tries another until succeedes
+    */
     public void chooseProductAndBuy() {
         int alreadyBought = -1;
         while (alreadyBought != 0) {
-            int globalIndex = Randomize.randomInt(0, VODSystemFX.getAllProducts().size());
+            int globalIndex = Randomize.randomInt(0, SystemManager.getAllProducts().size());
             alreadyBought = 0;
             for (int index : productList) {
-                if(index == globalIndex) alreadyBought++;
+                if (index == globalIndex) {
+                    alreadyBought++;
+                }
             }
-            if (alreadyBought == 0) buyProduct(globalIndex);
+            if (alreadyBought == 0) {
+                buyProduct(globalIndex);
+            }
         }
     }
-    
-    //** User without subscription pays for single product. With subscription pays once a month so not here
-    // User pays for stream no matter if he has subscription
-    // Depending on type of agreement Distributor gets his percentage of price or monthly salary so not here
+
+    /** User without subscription pays for single product. With subscription pays once a month so not here.
+    * User pays for stream no matter if he has subscription.
+    * Depending on type of agreement Distributor gets his percentage of price or monthly salary so not here.
+    * @param globalIndex - index of product on global list
+    */
     public void buyProduct(int globalIndex) {
-        Product p = VODSystemFX.getAllProducts().get(globalIndex);
+        Product p = SystemManager.getAllProducts().get(globalIndex);
         if ("none".equals(this.subscriptionType) || p.getStreamingDate() != null) {
             double price = p.getPrice();
             if ("ProductPricing".equals(p.getDistributor().getAgreementType())) {
                 double percForDistributor = p.getDistributor().getSalary();
                 p.getDistributor().getMoneyTransfer(price * percForDistributor);
-                VODSystemFX.payToSystem(price * (1 - percForDistributor));
+                SystemManager.payToSystem(price * (1 - percForDistributor));
             } else {
-                VODSystemFX.payToSystem(price);
+                SystemManager.payToSystem(price);
             }
         }
         productList.add(globalIndex);
         System.out.println(this.getCode() + " purchased " + p.getTitle());
     }
-    
-    //** Users choose random product from private list and:
-    // a) Watched and votes for movie or released series
-    // b) When series is not released yet or it's stream - skips
+
+    /** Users choose random product from private list and:
+    * a) Watched and votes for movie or released series
+    * b) When series is not released yet or it's stream - skips
+    */
     public void watchProductAndVote() {
         int choose = Randomize.randomInt(0, productList.size());
-        Product p = VODSystemFX.getAllProducts().get(choose);
+        Product p = SystemManager.getAllProducts().get(choose);
         if (!p.isReleased() || p.getStreamingDate() != null) {
             System.out.println(this.code + " can't wait to watch " + p.getTitle());
         } else {
@@ -124,13 +142,18 @@ public class User implements Runnable {
         }
     }
 
-    // Deletes element on local list using local index
+    /** Deletes element on local list using local index
+     * 
+     * @param localIndex - index on local list [0 ... size()]
+     */
     public void removeProduct(int localIndex) {
         productList.remove(localIndex);
     }
 
-    // ** Changes value of element on local list by -1. Used when deleting product from global list
-    //* For better performacne sorting can be added here.
+    /** Changes value of element on local list by -1. Used when deleting product from global list
+    * For better performacne sorting can be added here.
+    * @param localIndex - index on local list [0 ... size()]
+    */
     public void reduceProductIndex(int localIndex) {
         productList.set(localIndex, productList.get(localIndex) - 1);
     }
@@ -142,7 +165,7 @@ public class User implements Runnable {
     public List<Integer> getProductList() {
         return productList;
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -174,4 +197,26 @@ public class User implements Runnable {
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public static boolean isStopWork() {
+        return stopWork;
+    }
+
+    public static void setStopWork(boolean stopWork) {
+        User.stopWork = stopWork;
+    }
+
+    public void setSubscriptionType(String subscriptionType) {
+        this.subscriptionType = subscriptionType;
+    }
+    
+    
 }

@@ -18,8 +18,9 @@ import vodsystemfx.classes.Movie;
 import vodsystemfx.classes.Randomize;
 import vodsystemfx.classes.Series;
 import vodsystemfx.classes.Stream;
+import vodsystemfx.classes.SystemManager;
 
-/**
+/** Displays window used for choosing type of product to create
  *
  * @author Tomasz Jurek
  */
@@ -57,28 +58,31 @@ public class NewProductWindow {
         GridPane.setConstraints(freeSpace, 0, 4);
         GridPane.setConstraints(backBtn, 0, 5);
 
-        Distributor d = VODSystemFX.getAllDistributors().get(Randomize.randomInt(0, VODSystemFX.getAllDistributors().size() - 1));
+        Distributor d = SystemManager.getAllDistributors().get(Randomize.randomInt(0, SystemManager.getAllDistributors().size() - 1));
 
         seriesBtn.setOnAction(e -> {
-            Series s = new Series(d);
+            Series s = new Series();
+            s.setDistributor(d);
             if (ProductWindow.display("New Series", s, false) == true) {
-                d.addProduct(VODSystemFX.addToAllProducts(s));
+                d.addProduct(SystemManager.addToAllProducts(s));
                 System.out.println("Series accepted.");
             }
         });
 
         movieBtn.setOnAction(e -> {
-            Movie m = new Movie(d);
+            Movie m = new Movie();
+            m.setDistributor(d);
             if (ProductWindow.display("New Movie", m, false) == true) {
-                d.addProduct(VODSystemFX.addToAllProducts(m));
+                d.addProduct(SystemManager.addToAllProducts(m));
                 System.out.println("Movie accepted.");
             }
         });
 
         streamBtn.setOnAction(e -> {
-            Stream st = new Stream(d);
+            Stream st = new Stream();
+            st.setDistributor(d);
             if (ProductWindow.display("New Stream", st, false) == true) {
-                int index = VODSystemFX.addToAllProducts(st);
+                int index = SystemManager.addToAllProducts(st);
                 d.addProduct(index);
                 st.setGlobalIndex(index); //So stream can delete itself
             }

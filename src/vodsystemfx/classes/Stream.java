@@ -9,9 +9,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vodsystemfx.VODSystemFX;
 
-/**
+/** Stream is kind of Product that can be purchased by user before its streaming date. When the day occurs all users having this stream
+ * are watching it and then series is deleted from system.
  *
  * @author Tomasz Jurek
  */
@@ -25,8 +25,10 @@ public class Stream extends Product implements Runnable {
         stopWork = true;
     }
     
-    public Stream(Distributor d) {
-        super(d);
+    /** Streaming date is always 1 month from date of adding product to the system
+     */
+    public Stream() {
+        super();
         if (Time.getMonth() != 12) {
             streamingDate.set(Time.getYear(), Time.getMonth() + 1, Time.getDay());
         } else {
@@ -38,15 +40,16 @@ public class Stream extends Product implements Runnable {
         t.start(); //I know I shouldn't add thread in constructor but after adding stream to product list I cant run it anymore cause Product is not runnable
     }
     
-    //** When streaming date passed: month now is greater or is the same but day now is greater or even stream 'is playing'
-    // for every user that purchased it before and then dissapears
+    /** When streaming date passed: month now is greater or is the same but day now is greater or even - stream 'is playing'
+    *  for every user that has purchased it and then dissapears
+    */
     @Override
     public void run() {
         while(!stopWork) {
             try {
                 Thread.sleep(500); //Checks every day
                 if(Time.getMonth() > streamingDate.get(Calendar.MONTH) || (Time.getMonth() == streamingDate.get(Calendar.MONTH) && Time.getDay() >= streamingDate.get(Calendar.DAY_OF_MONTH))) {
-                    VODSystemFX.removeProduct(globalIndex);
+                    SystemManager.removeProduct(globalIndex);
                     stopWork = true;
                 }
             } catch (InterruptedException ex) {
@@ -60,7 +63,13 @@ public class Stream extends Product implements Runnable {
         return streamingDate.get(Calendar.YEAR) + "." + streamingDate.get(Calendar.MONTH) + "." + streamingDate.get(Calendar.DAY_OF_MONTH);
     }
     
+    @Override
     public void setGlobalIndex(int index) {
         this.globalIndex = index;
+    }
+    
+    @Override
+    public int getGlobalIndex() {
+        return globalIndex;
     }
 }

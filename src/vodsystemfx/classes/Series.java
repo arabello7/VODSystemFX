@@ -10,8 +10,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-/**
- *
+/** Series is kind of Product extended by list of seasons and release date. Series can be bought by user any time, but user cannot watch it
+ * before the release date.
  * @author Tomasz Jurek
  */
 public final class Series extends Product {
@@ -19,8 +19,10 @@ public final class Series extends Product {
     private final List<Season> seasons;
     private final GregorianCalendar releaseDate = new GregorianCalendar();
 
-    public Series(Distributor dist) {
-        super(dist);
+    /** Release date is calculated by adding 5 months to current system date
+     */
+    public Series() {
+        super();
         this.seasons = new ArrayList<>();
         if (Time.getMonth() <= 7) {
             this.releaseDate.set(Time.getYear(), Time.getMonth() + 5, Time.getDay());
@@ -30,9 +32,11 @@ public final class Series extends Product {
         generateSeasons(); 
     }
 
+    /** Generating 5 seasons for the series
+     */
     private void generateSeasons() {
         for (int i = 1; i < 6; i++) {
-            Season s = new Season(this.distributor); // Fresh new product
+            Season s = new Season(); // Fresh new product
             s.inheritSeriesData(this, i); // Product (season) gets needed data from its Series
             seasons.add(s);
         }
