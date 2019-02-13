@@ -1,12 +1,33 @@
-Aplikację stworzył:
+# VODSystemFX
 
-Tomasz Jurek
+App simulates administration of VOD System. Main objects inside are: distributors, users and products (movies, series, streams). Includes GUI written in JavaFX. It was an university project for Objective Programming subject at 2nd year of studies.
 
-Przy pierwszym uruchomieniu przy propozycji odczytu danych zalecam kliknąć 'cancel'. Userzy będą tworzyli się sami przy starcie programu, dystybutorów należy dodać ręcznie ('New Distributor'), aby w programie zaczęły się pojawiać produkty. Przynajmniej jeden dystrybutor musi też istnieć, żeby można było dodać produkty ręcznie klikająć 'New Product'. Do tworzenia userów służy przycisk 'New User'.
+### Project desription
 
-Aby zobaczyć informacje o danym obiekcie należy kliknąć na niego na liście, wtedy można go też usunąć. Listę produktów można przeszukiwać za pomocą panelu z prawej strony, przycisk 'Refresh' służy do odświeżania listy, listy odświeżają się też gdy najedzie się myszką na 1. lub 2. także trzeba aktywnie machać kursorem, żeby na bierząco śledzić program.
+<in progress...>
 
-Przycisk 'Subscription Pricing' otwiera okno gdzie można zmieniać ceny miesięcznych abonamentów dla userów, służy też do prowokowania szybkiego bankructwa, wystarczy wpisać ujemne liczby i wtedy nasi użytkownicy dostają wypłate :D Z prawej strony jest też okno ze stanem konta systemu, na starcie dałem 1000. 
+### Graphics
 
-Zalecam też uruchomienie aplikacji w kompilatorze, wtedy w outpucie widać dokładnie co się dzieje.
+<pictures here>
 
+## Running
+
+When running for the first time I recommend to click 'cancel'. Users will be created automaticaly with program start. Distributors must be added manualy ('New Distributor') so they can create products and add them to the system. At least one distributor must exist so you can add products by yourself ('New Product'). You can also add new users ('New User').
+
+By clicking the object on the list you get details about it with possibility to delete the object. Products list can be searched using right panel. Lists can be refreshed using special button but also when hovering the mouse on 1st or 2nd list so it's important to move the cursor actively to be up to date with the system. 
+
+('Subscription Pricing') button opens the window where you can change pricing of monthly subscriptions for users. It's also the way to trigger system bankcrupcy which ends program after 3 months of negative financial flow (worth trying!). On the right side there is field with current account balance.
+
+I recommend to run the program in the compiler to see details of every action in output.
+
+### Built With
+
+* [Java 8.0]
+* [JavaFX]
+* [JavaFXML]
+* [NetBeans IDE 8.2]
+
+### Author
+
+* **Tomasz Jurek** - *Total work* - [tjurek](https://github.com/arabello7)
+In case of questions or suggestions feel free to contact me at: tomaszmjurek(at)gmail.com
