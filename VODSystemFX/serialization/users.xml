@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_191" class="java.beans.XMLDecoder">
+ <int>9</int>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>27.7.1948</string>
+  </void>
+  <void property="code">
+   <string>105b65018ecb58</string>
+  </void>
+  <void property="creditCard">
+   <string>5291678430669029</string>
+  </void>
+  <void property="email">
+   <string>105b6501@mail.com</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>16.8.1991</string>
+  </void>
+  <void property="code">
+   <string>105c9b747aefd4</string>
+  </void>
+  <void property="creditCard">
+   <string>5260710144042732</string>
+  </void>
+  <void property="email">
+   <string>105c9b74@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>none</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>7.4.1964</string>
+  </void>
+  <void property="code">
+   <string>1059b424d938b2</string>
+  </void>
+  <void property="creditCard">
+   <string>5225759746595034</string>
+  </void>
+  <void property="email">
+   <string>1059b424@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>premium</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>11.10.1934</string>
+  </void>
+  <void property="code">
+   <string>105c1438758d17</string>
+  </void>
+  <void property="creditCard">
+   <string>5264038629570683</string>
+  </void>
+  <void property="email">
+   <string>105c1438@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>family</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>4.11.1946</string>
+  </void>
+  <void property="code">
+   <string>105bec0c6fa89e</string>
+  </void>
+  <void property="creditCard">
+   <string>5292231122456906</string>
+  </void>
+  <void property="email">
+   <string>105bec0c@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>premium</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>1.7.1944</string>
+  </void>
+  <void property="code">
+   <string>105e2b11feed8f</string>
+  </void>
+  <void property="creditCard">
+   <string>5263757739635611</string>
+  </void>
+  <void property="email">
+   <string>105e2b11@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>none</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>18.8.1944</string>
+  </void>
+  <void property="code">
+   <string>105466d2e2d701</string>
+  </void>
+  <void property="creditCard">
+   <string>5273999531816022</string>
+  </void>
+  <void property="email">
+   <string>105466d2@mail.com</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>26.7.1974</string>
+  </void>
+  <void property="code">
+   <string>105c5513d6329a</string>
+  </void>
+  <void property="creditCard">
+   <string>5208628831527632</string>
+  </void>
+  <void property="email">
+   <string>105c5513@mail.com</string>
+  </void>
+ </object>
+ <object class="vodsystemfx.classes.User">
+  <void property="birthDate">
+   <string>24.5.1984</string>
+  </void>
+  <void property="code">
+   <string>10542c324f25cb</string>
+  </void>
+  <void property="creditCard">
+   <string>5206831880320448</string>
+  </void>
+  <void property="email">
+   <string>10542c32@mail.com</string>
+  </void>
+  <void property="subscriptionType">
+   <string>family</string>
+  </void>
+ </object>
+</java>

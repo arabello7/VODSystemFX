@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_191" class="java.beans.XMLDecoder">
+ <int>1</int>
+ <object class="vodsystemfx.classes.Stream" id="Stream0">
+  <void property="actors">
+   <void index="1">
+    <string>Jim Carrey</string>
+   </void>
+   <void index="2">
+    <string>Pete Postlethwaite</string>
+   </void>
+  </void>
+  <void property="distributor">
+   <object class="vodsystemfx.classes.Distributor" id="Distributor0">
+    <void property="accountBalance">
+     <double>27409.47</double>
+    </void>
+    <void property="name">
+     <string>Soda Pictures</string>
+    </void>
+    <void property="productList">
+     <void method="add">
+      <int>0</int>
+     </void>
+    </void>
+    <void property="salary">
+     <double>1050.0</double>
+    </void>
+   </object>
+  </void>
+  <void property="duration">
+   <int>67</int>
+  </void>
+  <void property="price">
+   <double>0.94</double>
+  </void>
+  <void property="prodCountries">
+   <void index="0">
+    <string>Turkmenistan</string>
+   </void>
+   <void index="1">
+    <string>Azerbaijan</string>
+   </void>
+  </void>
+  <void property="productionDate">
+   <string>4.11.1966</string>
+  </void>
+  <void property="title">
+   <string>Spectacular Scientist Discovery</string>
+  </void>
+ </object>
+</java>
